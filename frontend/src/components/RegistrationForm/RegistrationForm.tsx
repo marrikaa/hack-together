@@ -1,26 +1,33 @@
-import React, { useState, useEffect } from 'react'
-import { register } from '../../database/dbManager';
+import React, { useState, useEffect, useContext } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { createExternalUser, getExternalUser } from '../../client/client';
+import { AppContext } from '../../context/AppContext';
 
 const RegistrationForm = () => {
 
-    const [wrongInput, setWrongInput] = useState("");
+    const { setUser } = useContext(AppContext);
 
+    const [wrongInput, setWrongInput] = useState("");
+    const navigate = useNavigate();
     useEffect(() => {
         setTimeout(() => {
             setWrongInput("");
         }, 2000);
     }, [wrongInput]);
 
-    const formSubmitted = (event: React.FormEvent<HTMLFormElement>) => {
+    const formSubmitted = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const { email, username, password, password_2 } = event.currentTarget;
         if (password.value !== password_2.value) {
             setWrongInput("Passwords are not the same!");
             return;
         }
-        try { register(username.value, email.value, password.value) }
-        catch {
-            setWrongInput("Mail is being used");
+        let res = await createExternalUser(username.value, email.value, password.value);
+        if (res.message !== 'success') {
+            setWrongInput(res.message);
+        } else {
+            setUser(await getExternalUser(email.value, password.value))
+            navigate('/');
         }
     }
 

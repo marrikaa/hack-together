@@ -1,32 +1,33 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { getExternalUser } from '../../client/client';
 import { AppContext } from '../../context/AppContext';
-import { login } from '../../database/dbManager'
 import { User } from '../../types/types';
 
 const LoginForm = () => {
 
-    const { setUser, username } = useContext(AppContext);
-    const [error, setError] = useState("");
-
+    const { user, setUser } = useContext(AppContext);
+    const navigate = useNavigate();
     const formSubmitted = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const { email, password } = event.currentTarget;
-        let currentUser: (User | undefined) = await login(email.value, password.value);
+        const { emailInput, passwordInput } = event.currentTarget;
+        let currentUser: (User | undefined) = await getExternalUser(emailInput.value, passwordInput.value)
         if (currentUser) {
-            setUser(currentUser);
+            setUser({ ...user, ...currentUser });
+            navigate(`/profile/${currentUser.username}`);
         }
     }
 
     const seeState = () => {
-        console.log(username);
+        console.log(user);
     }
 
     return (
         <>
             <form onSubmit={formSubmitted} className='formInput' method='get'>
                 <h2>Log in</h2>
-                <input name="email" placeholder='Your email adress' type="email" />
-                <input name="password" placeholder='Your password' type="password" />
+                <input name="emailInput" placeholder='Your email adress' type="email" />
+                <input name="passwordInput" placeholder='Your password' type="password" />
                 <button className='red-button' type='submit'>log in</button>
             </form>
             <button onClick={seeState}>see state</button>

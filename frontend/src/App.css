@@ -7,6 +7,7 @@
     font-size: 40px;
     border: none;
     width: 12rem;
+    cursor: pointer;
 }
 
 
@@ -24,8 +25,14 @@
 .header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     background-color: #031927;
     color: white;
+}
+
+.header-logo {
+    width: 50px;
+    height: 50px;
 }
 
 .left-header {
