@@ -1,6 +1,6 @@
 import { User } from '../types/types';
 
-const root = 'http://localhost:3001';
+const root = 'https://us-central1-hacktogether-api.cloudfunctions.net/app';
 
 export const createExternalUser = async (username: string, email: string, password: string) => {
     const response = await fetch(`${root}/api/register`, {
