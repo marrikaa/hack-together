@@ -32,16 +32,18 @@ const RegistrationForm = () => {
     }
 
     return (
-        <form onSubmit={formSubmitted}>
-            <h2>Register</h2>
-            <h3>{wrongInput}</h3>
-            <input name='email' placeholder='Your email adress' type="email" />
-            <input name='username' placeholder='Your username' type="text" />
-            <input name='password' placeholder='Your password' type="password" />
-            <input name='password_2' placeholder='Your password' type="password" />
-            <button className='red-button'>Register</button>
-            {wrongInput !== "" && <label>{wrongInput}</label>}
-        </form>
+        <>
+            <form onSubmit={formSubmitted} className='login-form'>
+                <h2>Register</h2>
+                <h3>{wrongInput}</h3>
+                <input name='email' placeholder='Your email adress' type="email" />
+                <input name='username' placeholder='Your username' type="text" />
+                <input name='password' placeholder='Your password' type="password" />
+                <input name='password_2' placeholder='Your password' type="password" />
+                <button className='red-button'>Register</button>
+                {wrongInput !== "" && <label>{wrongInput}</label>}
+            </form>
+        </>
     )
 }
 

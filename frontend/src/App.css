@@ -4,18 +4,21 @@
     background: #BA1200;
     border-radius: 10px;
     color: white;
-    font-size: 40px;
+    font-size: 1.5rem;
     border: none;
-    width: 12rem;
+    width: 10rem;
     cursor: pointer;
 }
-
 
 * {
     font-family: 'Inter', sans-serif;
     font-weight: bold;
-    text-align: center;
     margin: 0px;
+}
+
+.application-box {
+    width: 80%;
+    padding: 2rem 10%;
 }
 
 .landing-page-logo {
@@ -28,6 +31,7 @@
     align-items: center;
     background-color: #031927;
     color: white;
+    width: 100%;
 }
 
 .header-logo {
@@ -37,6 +41,7 @@
 
 .left-header {
     display: flex;
+    align-items: center;
 }
 
 .formInput {
@@ -52,4 +57,131 @@ input {
     border: 1px solid;
     height: 3rem;
     font-size: medium;
+}
+
+.profile-description {
+
+    width: 100%;
+    height: 200px;
+    resize: none;
+    border: none;
+    background-color: aliceblue;
+}
+
+.pop-up-container {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, .5);
+    z-index: 5;
+}
+
+.pop-up {
+    background-color: white;
+    width: 45%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 10px;
+}
+
+.pop-up-button-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 2em;
+    width: 100%;
+}
+
+.pop-up-button-container>button {
+    width: 40%;
+}
+
+.App {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.skill-tag {
+    background: #BA1200;
+    border-radius: 10px;
+    color: white;
+    font-size: 15px;
+    border: none;
+    display: flex;
+    margin-right: 10px;
+    justify-content: space-between;
+    width: 100px;
+    padding: 5px;
+}
+
+.skill-tag button {
+
+    border: none;
+    background: #BA1200;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+}
+
+.profile-tags-container {
+    display: flex;
+
+}
+
+.new-tag-button {
+    width: 2rem;
+    border-radius: 10px;
+    background: #BA1200;
+    padding: 1em;
+    border: none;
+}
+
+.about-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.edit-button {
+    background-color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.header-link {
+    margin: 1rem;
+    text-decoration: none;
+    color: white;
+    font-size: 1.5rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.button {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.profile-one-link {
+    display: flex;
+    justify-content: space-between;
+    width: 20%;
+}
+
+.profile-one-link {
+    display: flex;
+}
+
+.profile-links-container {
+    display: flex;
 }

@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'fire
 import { collection, setDoc, doc, getDoc, where, query, getDocs } from "firebase/firestore";
 import { User } from '../types/types';
 import { authenticator, dbConnection } from './firebaseConfig';
+import { Tags } from '../types/types';
 
 const addUser = async (userName: string, uid: string) => {
     try {
@@ -49,7 +50,7 @@ export const register = async (username: string, email: string, password: string
 export const login = async (email: string, password: string): Promise<User | undefined> => {
     const userCredentials = await signInWithEmailAndPassword(authenticator, email, password);
     const user = await getUser(userCredentials.user.uid);
-    return user as User;
+    return { username: user.username, uid: userCredentials.user.uid } as User;
 }
 
 export const getUserByUserName = async (userName: string): Promise<User | undefined> => {
@@ -57,4 +58,23 @@ export const getUserByUserName = async (userName: string): Promise<User | undefi
     const q = query(usersRef, where("username", "==", userName));
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs[0].data() as User;
+}
+
+export const getAllTags = async (): Promise<Tags[] | undefined> => {
+    const tagsRef = collection(dbConnection, "skills");
+    const querySnapshot = await getDocs(query(tagsRef));
+    const tags = querySnapshot.docs.map(tag => tag.data());
+    return tags as Tags[];
+}
+
+export const updateUser = async (user: User): Promise<string> => {
+    try {
+
+        const docRef = doc(dbConnection, "users", user.uid);
+        setDoc(docRef, user, { merge: true });
+        return "success";
+
+    } catch (error: any) {
+        return error.message;
+    }
 }

@@ -7,6 +7,7 @@ export type Link = {
 }
 
 export type User = {
+    uid: string,
     username: string,
     img: string,
     about: string,

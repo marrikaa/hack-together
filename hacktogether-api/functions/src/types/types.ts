@@ -13,3 +13,8 @@ export type Link = {
     name: string,
     value: string,
 }
+
+export type Tags = {
+    name: string,
+}
+

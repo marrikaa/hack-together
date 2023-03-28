@@ -17,6 +17,14 @@ export const createExternalUser = async (username: string, email: string, passwo
     return response.json();
 }
 
+export const getExternalTags = async (): Promise<string[]> => {
+    const response = await fetch(`${root}/api/tags`);
+    const tags = response.json();
+    console.log(tags);
+
+    return tags
+}
+
 export const getExternalUser = async (email: string, password: string): Promise<User> => {
     const response = await fetch(`${root}/api/login`, {
         method: "POST",
@@ -33,6 +41,19 @@ export const getExternalUser = async (email: string, password: string): Promise<
 
 
 export const getExternalUserByUserName = async (UserName: string): Promise<User> => {
-    const response = await fetch(`${root}/api/profile/${UserName}`)
+    const response = await fetch(`${root}/api/profile/${UserName}`);
+    return response.json();
+}
+
+export const updateExternalProfile = async (user: User) => {
+
+    console.log(user);
+    const response = await fetch(`${root}/api/profile/${user!.username}`, {
+        method: 'PATCH',
+        body: JSON.stringify(user),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    })
     return response.json();
 }

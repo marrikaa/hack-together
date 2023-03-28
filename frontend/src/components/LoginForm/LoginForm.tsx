@@ -13,13 +13,9 @@ const LoginForm = () => {
         const { emailInput, passwordInput } = event.currentTarget;
         let currentUser: (User | undefined) = await getExternalUser(emailInput.value, passwordInput.value)
         if (currentUser) {
-            setUser({ ...user, ...currentUser });
+            setUser(currentUser);
             navigate(`/profile/${currentUser.username}`);
         }
-    }
-
-    const seeState = () => {
-        console.log(user);
     }
 
     return (
@@ -30,7 +26,6 @@ const LoginForm = () => {
                 <input name="passwordInput" placeholder='Your password' type="password" />
                 <button className='red-button' type='submit'>log in</button>
             </form>
-            <button onClick={seeState}>see state</button>
         </>
     )
 }

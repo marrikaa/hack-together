@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { socialMediaImages } from '../../assets/images/socialMediaIcons';
+import enlace from '../../assets/images/socialMediaIcons/enlace.png'
+
 
 type ProfileLinkProps = {
     name: string,
@@ -18,9 +20,11 @@ const ProfileLink = ({ name, value }: ProfileLinkProps) => {
     }, [])
 
     return (
-        <div>
-            <img src={image} alt="" />
-            <label>{value}</label>
+        <div className='profile-one-link'>
+            <a href={value}>
+                <img src={image ? image : enlace} alt="" style={{ width: '50px', height: '50px' }} />
+                <label>{name}</label>
+            </a>
         </div>
     )
 }

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 import { User } from '../../types/types';
 
@@ -23,7 +23,8 @@ const Header = () => {
                 <h2>HackTogether</h2>
             </div>
             <div className='button'>
-                {user?.username}
+                {user?.username && <Link reloadDocument to={`/profile/${user?.username}`} className='header-link red-button'><div>{user?.username}</div></Link>}
+                <Link to="/projectlist" className='header-link red-button'><div>Projects</div></Link>
                 {!user?.username && <button className='red-button' onClick={() => navigate('/login')}>Login</button>}
                 {user?.username && <button className='red-button' onClick={logOut}>Logout</button>}
                 {!user?.username && <button className='red-button' onClick={() => navigate('/register')}>Register</button>}

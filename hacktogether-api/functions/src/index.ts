@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
 import express from "express";
-import { getUserByUserName, login, register } from './database/dbManager';
+import { getUserByUserName, login, register, getAllTags, updateUser } from './database/dbManager';
 import { User } from './types/types';
+
 const functions = require('firebase-functions')
 
 
@@ -51,6 +52,25 @@ app.post('/api/login', async (req, res) => {
 app.get('/api/profile/:username', async (req, res) => {
     const user = await getUserByUserName(req.params.username);
     res.status(200).send({ ...user, messages: [] })
+})
+
+app.patch('/api/profile/:username', async (req, res) => {
+    if (!req.body) {
+        res.status(400).send({ message: "Body is not correct" });
+    }
+    const operationMessage = await updateUser(req.body);
+    if (operationMessage === "success") {
+        res.status(200).send({ message: operationMessage });
+    }
+    else {
+        res.status(400).send({ message: operationMessage });
+    }
+})
+
+app.get('/api/tags', async (req, res) => {
+    const tags = await getAllTags();
+    const stringTags = tags?.map(tag => tag.name);
+    res.status(200).send(stringTags);
 })
 
 exports.app = functions.https.onRequest(app);
