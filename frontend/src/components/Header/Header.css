@@ -1,0 +1,33 @@
+.header-link-div:hover {
+    background-color: rgb(0, 0, 0);
+    cursor: pointer;
+    filter: invert();
+    transition: all 0.3s;
+}
+
+.header-link-div {
+    font-size: 1rem;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    transition: all 0.2s;
+    user-select: none;
+    font-weight: 700;
+}
+
+.left-header {
+    display: flex;
+    align-items: center;
+    margin-left: 3%;
+}
+
+.header-menu {
+    margin-right: 3%;
+    display: flex;
+    justify-content: space-around;
+    width: auto;
+}
+
+.header-icon {
+    height: 20px;
+}

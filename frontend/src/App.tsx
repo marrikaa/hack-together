@@ -8,6 +8,7 @@ import LoginForm from './components/LoginForm/LoginForm';
 import { AppContext } from './context/AppContext';
 import { Profile } from './components/Profile/Profile';
 import { ProjectList } from './components/ProjectList/ProjectList';
+import ProjectDetails from './components/ProjectDetails/ProjectDetails';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
           <Route path="/login" element={<LoginForm />}></Route>
           <Route path={`/profile/:username`} element={<Profile />}></Route>
           <Route path="/projectlist" element={<ProjectList />}></Route>
+          <Route path='/project/:projectId' element={<ProjectDetails />}></Route>
         </Routes>
       </div>
       <button onClick={() => console.log(user)}>show state</button>

@@ -1,4 +1,4 @@
-import { User } from '../types/types';
+import { Project, User, ProjectWithoutId } from '../types/types';
 
 const root = 'https://us-central1-hacktogether-api.cloudfunctions.net/app';
 
@@ -23,6 +23,18 @@ export const getExternalTags = async (): Promise<string[]> => {
     console.log(tags);
 
     return tags
+}
+
+export const getExternalProjects = async (): Promise<Project[]> => {
+    const response = await fetch(`${root}/api/projects`);
+    const projects = response.json();
+    return projects
+}
+
+export const getExternalProjectById = async (id: string): Promise<Project> => {
+    const response = await fetch(`${root}/api/project/${id}`);
+    const project = response.json();
+    return project;
 }
 
 export const getExternalUser = async (email: string, password: string): Promise<User> => {
@@ -55,5 +67,16 @@ export const updateExternalProfile = async (user: User) => {
             'Content-type': 'application/json; charset=UTF-8',
         },
     })
+    return response.json();
+}
+
+export const createProjectInDB = async (project: ProjectWithoutId) => {
+    const response = await fetch(`/api/project`, {
+        method: "POST",
+        body: JSON.stringify(project),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8'
+        }
+    });
     return response.json();
 }

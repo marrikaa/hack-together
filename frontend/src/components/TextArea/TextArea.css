@@ -1,0 +1,40 @@
+.text-area-app {
+    display: flex;
+    font-family: Helvetica, Arial, sans-serif;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 100ch;
+}
+
+label {
+    color: #727272;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+textarea {
+    background: #ffffff;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #ededed;
+    line-height: 1.5;
+    resize: none;
+    transition: border-color 150ms ease;
+    width: 100%;
+    margin-top: 1rem;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+textarea:hover {
+    border-color: #c6c6c6;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #c6c6c6;
+}
+
+textarea::placeholder {
+    color: #c6c6c6;
+}

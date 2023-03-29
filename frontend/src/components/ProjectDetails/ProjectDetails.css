@@ -1,0 +1,35 @@
+.fullfilled {
+    margin: 1rem;
+    text-align: center;
+    color: #BA1200;
+    font-weight: 800;
+}
+
+.apply-button {
+    align-self: center;
+    width: 50%;
+    margin-top: 1rem;
+    background-color: #BA1200;
+    font-size: large;
+    border-radius: 1rem;
+    font-weight: 800;
+    color: white;
+    border: none;
+}
+
+.apply-button:hover {
+    background-color: rgb(173, 173, 173);
+    color: #BA1200;
+}
+
+.fullfilled-div {
+    background-color: rgb(143, 143, 143);
+    color: white;
+    order: 2;
+}
+
+.positions-container {
+    display: flex;
+    flex-direction: column;
+
+}

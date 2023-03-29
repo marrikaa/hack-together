@@ -2,8 +2,13 @@ import React, { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 import { User } from '../../types/types';
+import './Header.css'
+
 
 const Logo = require('../../assets/images/logo.png');
+const emailWhite = require('../../assets/images/email_white.png');
+const user = require('../../assets/images/user.png');
+const userWhite = require('../../assets/images/user-white.png');
 
 const Header = () => {
     const { user, setUser, getUser } = useContext(AppContext)
@@ -22,12 +27,13 @@ const Header = () => {
                 <img src={Logo} alt="" className='header-logo' />
                 <h2>HackTogether</h2>
             </div>
-            <div className='button'>
-                {user?.username && <Link reloadDocument to={`/profile/${user?.username}`} className='header-link red-button'><div>{user?.username}</div></Link>}
-                <Link to="/projectlist" className='header-link red-button'><div>Projects</div></Link>
-                {!user?.username && <button className='red-button' onClick={() => navigate('/login')}>Login</button>}
-                {user?.username && <button className='red-button' onClick={logOut}>Logout</button>}
-                {!user?.username && <button className='red-button' onClick={() => navigate('/register')}>Register</button>}
+            <div className='header-menu'>
+                {user?.username && <img onClick={() => navigate(`/profile/${user?.username}`)} src={userWhite} className='header-link-div header-icon' />}
+                {user?.username && <img className="header-link-div header-icon" onClick={() => navigate('/messages')} src={emailWhite} alt="" />}
+                <div className='header-link-div' onClick={() => navigate('/projectlist')}>Projects</div>
+                {!user?.username && <div className='header-link-div' onClick={() => navigate('/login')}>Login</div>}
+                {user?.username && <div className='header-link-div' onClick={logOut}>Logout</div>}
+                {!user?.username && <div className='header-link-div' onClick={() => navigate('/register')}>Register</div>}
             </div>
         </header>
     )

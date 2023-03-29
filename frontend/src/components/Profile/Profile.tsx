@@ -6,6 +6,11 @@ import { Link, User } from '../../types/types';
 import ProfileLink from '../ProfileLink/ProfileLink';
 import { ProfileNewLink } from '../ProfileNewLink/ProfileNewLink';
 import { ProfileNewTag } from '../ProfileNewTag/ProfileNewTag';
+import TextArea from '../TextArea/TextArea';
+import './Profile.css'
+
+const addIcon = require('../../assets/images/add.png');
+const deleteIcon = require('../../assets/images/delete.png');
 
 export const Profile = () => {
     const [isEditButton, setisEditButton] = useState(false);
@@ -23,6 +28,7 @@ export const Profile = () => {
         const getUser = async () => {
             const newUser = await getExternalUserByUserName(username!);
             setProfileUser(newUser);
+            setCurrentDescription(newUser!.about);
             setCurrentTags(newUser!.skills)
             setCurrentLinks(newUser!.links);
             if (user && username === user.username) {
@@ -72,30 +78,33 @@ export const Profile = () => {
             {profileUser &&
                 <div>
                     <div className='about-header'>
-                        <h1>{profileUser.username}</h1>
-                        {isEditButton && !editEnabled && <button className='edit-button' onClick={() => setEditEnabled((editEnabled) => !editEnabled)}>
-                            <img src="https://icons.veryicon.com/png/o/miscellaneous/linear-small-icon/edit-246.png" width="40px" height="40px" />
-                        </button>}
+                        <h1 className='profile-username'>{profileUser.username}</h1>
+                        {isEditButton && !editEnabled && <img className='edit-button'
+                            onClick={() => setEditEnabled((editEnabled) => !editEnabled)}
+                            src="https://icons.veryicon.com/png/o/miscellaneous/linear-small-icon/edit-246.png"
+                            width="40px" height="40px" alt="" />
+                        }
                     </div>
-                    <h2>About:</h2>
-                    {<textarea className='profile-description' name="aboutMe" readOnly={!editEnabled} defaultValue={profileUser.about} onChange={changeCurrentDescription} />}
+                    {<TextArea canType={editEnabled} currentDescription={profileUser.about} onTyping={changeCurrentDescription} />}
                     <h2>Tech stack</h2>
                     <div className='profile-tags-container'>
                         {currentTags.map((skill, i) => {
                             return (<div className='skill-tag' key={i}><p>{skill}</p>
-                                {editEnabled && <button onClick={() => removeTag(i)}>x</button>}
+                                {editEnabled && <img src={deleteIcon} className='remove-tag-button' alt="" onClick={() => removeTag(i)} />}
                             </div>)
                         })}
-                        {editEnabled && <button onClick={addTag} className='new-tag-button'>+</button>}
+                        {editEnabled && <img src={addIcon} onClick={addTag} className='new-tag-button' alt="" />}
                     </div>
                     <h2>Social media and portfolio</h2>
                     <div className='profile-links-container'>
                         {currentLinks.map((link, i) => {
-                            return (<div className='profile-one-link'><ProfileLink name={link.name} value={link.value} />{editEnabled && <button onClick={() => removeLink(i)}>x</button>}</div>)
+                            return (<div className='profile-one-link editable'><ProfileLink name={link.name} value={link.value} />{editEnabled && <button className='profile-remove-link-button' onClick={() => removeLink(i)}>x</button>}</div>)
                         })}
-                        {editEnabled && <button className='profile-new-link' onClick={() => setLinkDialogVisible(true)}>+</button>}
+                        {editEnabled && <img src={addIcon} className='new-tag-button' onClick={() => setLinkDialogVisible(true)} alt="" />}
+
+                        {editEnabled && <button className='red-button' onClick={save}>Save</button>}
                     </div>
-                    {editEnabled && <button className='red-button' onClick={save}>Save</button>}
-                </div>}
-        </div >)
+                </div >}
+        </div>
+    )
 }

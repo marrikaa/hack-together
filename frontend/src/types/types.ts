@@ -6,6 +6,7 @@ export type Link = {
     value: string,
 }
 
+
 export type User = {
     uid: string,
     username: string,
@@ -21,4 +22,27 @@ export type AppContextType = {
     user: User,
     getUser: () => void,
     setUser: (user: User) => void,
+}
+
+export type Position = {
+    title: string
+    description: string,
+    skills: string[];
+    fullfilled: boolean;
+}
+
+export type Project = {
+    id: string,
+    title: string,
+    description: string,
+    owner: string,
+    positions: Position[],
+    developers: string[],
+}
+
+export type ProjectWithoutId = {
+    title: string,
+    description: string,
+    owner: string,
+    positions: Position[],
 }
