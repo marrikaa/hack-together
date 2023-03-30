@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import express from "express";
-import { getUserByUserName, login, register, getAllTags, updateUser } from './database/dbManager';
+import { createProject, getAllProjects, getProjectsById, getUserProjectsById } from './database/PDbManager';
+import { getUserByUserName, login, register, getAllTags, updateUser, addProjectToUser } from './database/UDbManager';
 import { User } from './types/types';
 
 const functions = require('firebase-functions')
@@ -26,7 +27,7 @@ app.post('/api/register', async (req, res) => {
         }
         const operationMessage = await register(req.body.username, req.body.email, req.body.password);
         if (operationMessage === "success") {
-            res.status(200).send({ message: operationMessage });
+            res.status(201).send({ message: operationMessage });
         }
         else {
             res.status(400).send({ message: operationMessage });
@@ -50,27 +51,95 @@ app.post('/api/login', async (req, res) => {
 })
 
 app.get('/api/profile/:username', async (req, res) => {
-    const user = await getUserByUserName(req.params.username);
-    res.status(200).send({ ...user, messages: [] })
+    try {
+        const user = await getUserByUserName(req.params.username);
+        res.status(200).send({ ...user, messages: [] })
+    } catch (e: any) {
+        res.status(500).send({ message: e.message });
+    }
 })
 
 app.patch('/api/profile/:username', async (req, res) => {
-    if (!req.body) {
-        res.status(400).send({ message: "Body is not correct" });
-    }
-    const operationMessage = await updateUser(req.body);
-    if (operationMessage === "success") {
-        res.status(200).send({ message: operationMessage });
-    }
-    else {
-        res.status(400).send({ message: operationMessage });
+    try {
+        if (!req.body) {
+            res.status(400).send({ message: "Body is not correct" });
+        }
+        const operationMessage = await updateUser(req.body);
+        if (operationMessage === "success") {
+            res.status(200).send({ message: operationMessage });
+        }
+        else {
+            res.status(400).send({ message: operationMessage });
+        }
+    } catch (e: any) {
+        res.status(500).send({ message: e.message });
     }
 })
 
 app.get('/api/tags', async (req, res) => {
-    const tags = await getAllTags();
-    const stringTags = tags?.map(tag => tag.name);
-    res.status(200).send(stringTags);
+    try {
+        const tags = await getAllTags();
+        const stringTags = tags?.map(tag => tag.name);
+        res.status(200).send(stringTags);
+    } catch (e: any) {
+        res.status(500).send({ message: e.message });
+    }
+})
+
+app.get('/api/projects', async (req, res) => {
+    try {
+        const projects = await getAllProjects();
+        res.status(200).send(projects);
+    } catch (e: any) {
+        res.status(500).send({ message: e.message });
+    }
+})
+
+app.get('/api/profile/:userId/projects', async (req, res) => {
+    try {
+        const projects = await getUserProjectsById(req.params.userId);
+        if (projects) {
+            res.status(200).send(projects);
+        }
+        else {
+            res.status(404).end();
+        }
+    } catch (e: any) {
+        res.status(500).send({ message: e.message });
+    }
+})
+
+app.post('/api/profile/:userId/projects', async (req, res) => {
+    try {
+        await addProjectToUser(req.params.userId, req.body.projectId);
+        res.status(201).send("created");
+    } catch (e: any) {
+        res.status(500).send({ message: e.message });
+    }
+})
+
+app.get('/api/project/:uid', async (req, res) => {
+    try {
+        console.log('user uid is ', req.params.uid);
+        const project = await getProjectsById(req.params.uid);
+        res.status(200).send(project);
+    } catch (e: any) {
+        res.status(500).send({ message: e.message });
+    }
+})
+
+
+
+app.post('/api/project', async (req, res) => {
+    try {
+        if (!(req.body.title && req.body.description && req.body.positions && req.body.description && req.body.owner)) {
+            res.status(400).send({ message: "Body is not correct" });
+        }
+        const projectId = await createProject(req.body);
+        res.status(201).send({ projectId: projectId });
+    } catch (e: any) {
+        res.status(500).send({ message: e.message });
+    }
 })
 
 exports.app = functions.https.onRequest(app);

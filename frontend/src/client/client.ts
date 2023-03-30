@@ -21,7 +21,6 @@ export const getExternalTags = async (): Promise<string[]> => {
     const response = await fetch(`${root}/api/tags`);
     const tags = response.json();
     console.log(tags);
-
     return tags
 }
 
@@ -71,7 +70,7 @@ export const updateExternalProfile = async (user: User) => {
 }
 
 export const createProjectInDB = async (project: ProjectWithoutId) => {
-    const response = await fetch(`/api/project`, {
+    const response = await fetch(`${root}/api/project`, {
         method: "POST",
         body: JSON.stringify(project),
         headers: {
@@ -79,4 +78,20 @@ export const createProjectInDB = async (project: ProjectWithoutId) => {
         }
     });
     return response.json();
+}
+
+export const getUserExternalProjects = async (uid: string) => {
+    const response = await fetch(`${root}/api/profile/${uid}/projects`);
+    return response.json();
+}
+
+export const addProjectToUser = async (userId: string, currentProjectId: string) => {
+    const response = await fetch(`${root}/api/profile/${userId}/projects`, {
+        method: 'POST',
+        body: JSON.stringify({ projectId: currentProjectId }),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8'
+        },
+    })
+    return response.text();
 }

@@ -12,7 +12,6 @@ export const ProjectList = () => {
         const getProjects = async () => {
             const projs = await getExternalProjects();
             setProjects(projs);
-
         }
         getProjects()
     }, [])

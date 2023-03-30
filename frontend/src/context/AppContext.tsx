@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useState } from 'react'
-import { Link, Message, User, AppContextType } from '../types/types'
+import { User, AppContextType } from '../types/types'
 
 export const AppContext = createContext<AppContextType>({
     getUser: () => { },

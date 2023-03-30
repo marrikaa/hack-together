@@ -1,0 +1,36 @@
+.project-list-one-project-container {
+    flex-direction: column;
+    margin-top: 2em;
+    display: flex;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 10px 10px 102px 20px rgba(0, 0, 0, 0.25);
+}
+
+.project-list-one-project-container.position-title {
+    color: #BA1200;
+}
+
+.open-positions-title,
+.project-card-title {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.create-project-button {
+    border: none;
+    height: 2rem;
+    font-size: 1.5rem;
+    background-color: white;
+    box-shadow: 10px 10px 102px 20px rgba(0, 0, 0, 0.25);
+    color: black;
+}
+
+.create-project-button:hover {
+    filter: invert();
+}
+
+.myProject-header {
+    display: flex;
+    justify-content: space-between;
+}

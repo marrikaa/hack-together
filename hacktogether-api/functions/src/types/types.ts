@@ -18,3 +18,24 @@ export type Tags = {
     name: string,
 }
 
+export type Position = {
+    title: string,
+    description: string,
+    skills: string[];
+    developer: string;
+}
+
+export type Project = {
+    id: string,
+    title: string,
+    description: string,
+    owner: string,
+    positions: Position[],
+}
+
+export type ProjectWthoutId = {
+    title: string,
+    description: string,
+    owner: string,
+    positions: Position[],
+}

@@ -25,7 +25,7 @@ export type AppContextType = {
 }
 
 export type Position = {
-    title: string
+    title: string,
     description: string,
     skills: string[];
     fullfilled: boolean;
