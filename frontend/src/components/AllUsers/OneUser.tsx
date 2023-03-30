@@ -23,7 +23,7 @@ export const OneUser = ({ username, img, about, links, skills, }: OneUserProps) 
     return (
         <div className='user-list-one-user-container' onClick={handleClick}>
             <h2 className='user-card-title'>{username}</h2>
-            <p>{about}</p>
+            <p className='about-p'>{about}</p>
             <div className='flex'>
                 {skills?.map((skill, i) => <label key={i} className='skill-tag'>{skill}</label>)}
             </div>

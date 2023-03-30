@@ -18,7 +18,6 @@ const AllUsers = () => {
 
     return (
         <div>
-            <h1>Users</h1>
             {users.map((user, i) => <OneUser username={user!.username} key={i}
                 img={user!.img} about={user!.about} links={user!.links} skills={user!.skills} />)}
         </div>

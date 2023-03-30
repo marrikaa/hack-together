@@ -23,7 +23,7 @@ const CreateProject = () => {
             positions: currentPositions,
         }
         const response = await createProjectInDB(projectToCreate);
-        console.log(response);
+        console.log(projectToCreate);
         await addProjectToUser(user!.uid, response.projectId);
         navigate(`/project/${response.projectId}`);
     }
@@ -51,7 +51,6 @@ const CreateProject = () => {
                 <OnePosition isApplicable={false} position={position} />
             )}
             <h2>Add Position</h2>
-
             <button className='red-button' onClick={() => setNewPositionPopUpVisible(true)}>+</button>
             <button className="save-project-button" onClick={saveProject}>Save Project</button>
         </div>

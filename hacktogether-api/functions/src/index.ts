@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import express from "express";
-import { addApplicationToProject, createProject, getAllProjects, getProjectsById, getUserProjectsById } from './database/PDbManager';
+import { addApplicationToProject, createProject, fromApplicationtoDevelopers, getAllProjects, getProjectsById, getUserProjectsById, removeApplicationFromProject } from './database/PDbManager';
 import { getUserByUserName, login, register, getAllTags, updateUser, addProjectToUser, getAllUsers } from './database/UDbManager';
 import { User } from './types/types';
 
@@ -46,7 +46,7 @@ app.post('/api/login', async (req, res) => {
         const user: (User | undefined) = await login(req.body.email, req.body.password);
         res.status(200).send(user);
     } catch (e: any) {
-        res.status(500).send({ message: e.message });
+        res.status(500).send({ username: "", uid: e.message });
     }
 })
 
@@ -135,11 +135,29 @@ app.get('/api/project/:uid', async (req, res) => {
         res.status(500).send({ message: e.message });
     }
 })
-app.patch('/api/project/:uid/:positionId', async (req, res) => {
-    try {
 
+app.post('/api/project/:uid/:positionId', async (req, res) => {
+    try {
         const project = await addApplicationToProject(req.params.uid, req.params.positionId, req.body);
         res.status(200).send(project);
+    } catch (e: any) {
+        res.status(500).send({ message: e.message });
+    }
+})
+
+app.delete('/api/project/:uid/:positionId', async (req, res) => {
+    try {
+        await removeApplicationFromProject(req.params.uid, req.params.positionId, req.body.username);
+        res.status(204).send({ message: "deleted" });
+    } catch (e: any) {
+        res.status(500).send({ message: e.message });
+    }
+})
+
+app.patch('/api/project/:uid/:positionId', async (req, res) => {
+    try {
+        await fromApplicationtoDevelopers(req.params.uid, req.params.positionId, req.body);
+        res.status(200).send({});
     } catch (e: any) {
         res.status(500).send({ message: e.message });
     }

@@ -36,6 +36,12 @@ export const getExternalProjectById = async (id: string): Promise<Project> => {
     return project;
 }
 
+
+type ExternalUserResponse = {
+    message: string;
+    user: User
+}
+
 export const getExternalUser = async (email: string, password: string): Promise<User> => {
     const response = await fetch(`${root}/api/login`, {
         method: "POST",
@@ -62,8 +68,6 @@ export const getAllExternalUsers = async (): Promise<User[]> => {
 }
 
 export const updateExternalProfile = async (user: User) => {
-
-    console.log(user);
     const response = await fetch(`${root}/api/profile/${user!.username}`, {
         method: 'PATCH',
         body: JSON.stringify(user),
@@ -104,10 +108,34 @@ export const addProjectToUser = async (userId: string, currentProjectId: string)
 export const addApplicationToPosition = async (projectId: string, positionId: string, aplication: Application) => {
     const response = await fetch(`${root}/api/project/${projectId}/${positionId}`, {
         method: 'POST',
-        body: JSON.stringify({ aplication: aplication }),
+        body: JSON.stringify(aplication),
         headers: {
             'Content-type': 'application/json; charset=UTF-8'
         },
     })
     return response.text();
+}
+
+
+export const acceptDeveloper = async (projectId: string, positionId: string, username: string) => {
+    const response = await fetch(`${root}/api/project/${projectId}/${positionId}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ username: username }),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8'
+        },
+    })
+    return response.text();
+}
+export const rejectDeveloper = async (projectId: string, positionId: string, username: string) => {
+    const response = await fetch(`${root}/api/project/${projectId}/${positionId}`, {
+        method: 'DELETE',
+        body: JSON.stringify({ username: username }),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8'
+        },
+    })
+    const text = await response.text();
+    console.log(text);
+    return text;
 }

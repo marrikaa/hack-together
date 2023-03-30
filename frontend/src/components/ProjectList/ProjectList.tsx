@@ -1,26 +1,67 @@
-import React, { useEffect, useState } from 'react'
-import { getExternalProjects } from '../../client/client'
+import React, { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { getExternalProjects, getUserExternalProjects } from '../../client/client'
+import { AppContext } from '../../context/AppContext'
 import { Project } from '../../types/types'
 import { OneProject } from './OneProject'
 import './ProjectList.css'
 
 const ProjectList = () => {
 
-    const [projects, setProjects] = useState<Project[]>([])
+    const [projects, setProjects] = useState<Project[]>([]);
+    const [userProjects, setUserProjects] = useState<string[]>([]);
+    const { user } = useContext(AppContext);
+    const [showMyProjects, setShowMyProjects] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const getProjects = async () => {
             const projs = await getExternalProjects();
             setProjects(projs);
         }
-        getProjects()
-    }, [])
+
+        getProjects();
+        const getUserProjects = async () => {
+            if (user!.username) {
+                const projects = await getUserExternalProjects(user!.uid);
+                const stringProjects = projects.map((project: Project) => project.id);
+                setUserProjects(stringProjects);
+            }
+        }
+        getProjects();
+        getUserProjects();
+    }, [user]);
 
     return (
         <div>
-            <h1>Projects</h1>
-            {projects.map((project, i) => <OneProject title={project.title} key={i} description={project.description} currentProject={project} positions={project.positions} />)}
-        </div>
+            {user!.username && <>
+                <h1>Projects</h1>
+                <div className='project-list-button-container'>
+                    <div className='flex'>
+                        <button className={`red-button myprojects-button ${showMyProjects ? 'selected '
+                            : ''}`} onClick={() => setShowMyProjects(true)}>My projects</button>
+                        <button className={`red-button allprojects-button ${!showMyProjects ? 'selected '
+                            : ''}`} onClick={() => setShowMyProjects(false)}>All projects</button>
+                    </div>
+                    <button className="create-project-button" onClick={() => navigate('/createproject')}>Create project</button>
+                </div>
+            </>}
+            {projects &&
+                !showMyProjects && projects.map((project, i) =>
+                    <OneProject title={project.title}
+                        key={i} description={project.description}
+                        currentProject={project}
+                        positions={project.positions} />)
+            }
+            {
+                projects && showMyProjects && projects.filter(project =>
+                    userProjects.includes(project.id)).map((project, i) => {
+                        return (<OneProject title={project.title} key={i}
+                            description={project.description} currentProject={project}
+                            positions={project.positions} />)
+                    }
+                    )}
+        </div >
     )
 }
 

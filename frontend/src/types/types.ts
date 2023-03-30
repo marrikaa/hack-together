@@ -32,10 +32,7 @@ export type Position = {
     description: string,
     skills: string[];
     fullfilled: boolean;
-    applications?: {
-        message: string,
-        username: string
-    }[]
+    applications: Application[],
     id?: string | undefined
 }
 

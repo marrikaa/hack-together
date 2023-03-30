@@ -24,6 +24,7 @@ export type Position = {
     skills: string[];
     developer: string;
     id: string;
+    applications: Application[];
 }
 
 export type Project = {

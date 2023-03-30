@@ -16,6 +16,7 @@
     font-family: 'Inter', sans-serif;
     font-weight: 100;
     margin: 0px;
+
 }
 
 .application-box {
@@ -23,9 +24,7 @@
     padding: 2rem 10%;
 }
 
-.landing-page-logo {
-    width: 10rem;
-}
+
 
 .header {
     display: flex;
@@ -44,11 +43,10 @@
 .formInput {
     display: flex;
     flex-direction: column;
-    margin: 5rem 35rem;
+    width: 30%;
 }
 
 input {
-    width: 12rem;
     margin: 1rem 0rem;
     border-radius: 0.5rem;
     border: 1px solid;
@@ -109,6 +107,8 @@ input {
 .login-form {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    align-items: center;
 }
 
 .skill-tag {
@@ -152,6 +152,8 @@ input {
 
 
 .profile-one-link {
+    border: 1px solid black;
+    padding: 5px;
     display: flex;
     justify-content: space-between;
     width: 20%;

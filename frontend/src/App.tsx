@@ -35,10 +35,9 @@ function App() {
           <Route path="/allUsers" element={<AllUsers />}></Route>
           <Route path="/createproject" element={<CreateProject />}></Route>
           <Route path='/project/:projectId' element={<ProjectDetails />}></Route>
-          <Route path='/profile/:username/projects' element={<MyProjects />}></Route>
+          {/* <Route path='/profile/:username/projects' element={<MyProjects />}></Route> */}
         </Routes>
       </div>
-      <button onClick={() => console.log(user)}>show state</button>
     </div >
   );
 }

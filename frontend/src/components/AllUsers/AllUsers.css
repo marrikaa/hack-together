@@ -5,6 +5,7 @@
     border-radius: 10px;
     padding: 2rem;
     box-shadow: 10px 10px 102px 20px rgba(0, 0, 0, 0.25);
+    padding: 1rem;
 }
 
 .project-list-one-project-container.position-title {
@@ -13,6 +14,11 @@
 
 
 .user-card-title {
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
+    margin-top: .5rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.about-p {
+    word-wrap: break-word;
 }

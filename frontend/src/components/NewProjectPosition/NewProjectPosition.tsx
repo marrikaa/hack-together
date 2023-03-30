@@ -29,6 +29,7 @@ export const NewProjectPosition = ({ setVisible, positions, setCurrentPositions 
             description: descriptionRef.current!.value,
             skills: currentSelectedTags,
             fullfilled: false,
+            applications: []
         }
 
         const tempPositions = [...positions];

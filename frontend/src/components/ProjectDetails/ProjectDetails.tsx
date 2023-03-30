@@ -4,6 +4,7 @@ import App from '../../App'
 import { getExternalProjectById } from '../../client/client'
 import { AppContext } from '../../context/AppContext'
 import { Project } from '../../types/types'
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 import { ApplyPopUp } from './ApplyPopUp'
 import { OnePosition } from './OnePosition'
 import './ProjectDetails.css'
@@ -25,16 +26,21 @@ const ProjectDetails = () => {
             setProject(requestedProject);
         }
         getProject();
-    }, [projectId])
+    }, [projectId, user])
+
 
 
     return (
         <div className='project-details'>
-            {applyPopUpVisible && <ApplyPopUp projectId={projectId} setVisible={setApplyPopUpVisible} selectedPositionId={selectedPosition} />}
-            <h1>{project?.title}</h1>
-            <h2>By {project?.owner}</h2>
-            <p>{project?.description}</p>
-            <div className='positions-container'> {project?.positions.map((position, i) => <OnePosition setSelectedPosition={setSelectedPosition} isMyProject={isMyProject} applications={position.applications} setApplyPopUpVisible={setApplyPopUpVisible} isApplicable={!isMyProject} projectId={project.id} position={position} key={i} />)}</div>
+            {!project && <LoadingSpinner />}
+            {project && <>
+                {applyPopUpVisible && <ApplyPopUp projectId={projectId} setVisible={setApplyPopUpVisible} selectedPositionId={selectedPosition} />}
+                <h1 style={{ fontWeight: 'medium' }}>{project?.title}</h1>
+                <h2 className='project-details-project-owner-name'>By {project?.owner}</h2>
+                <p className='project-details-description'>{project?.description}</p>
+                <h2>Looking for:</h2>
+                <div className='positions-container'> {project?.positions.map((position, i) => <OnePosition project={project} setSelectedPosition={setSelectedPosition} isMyProject={isMyProject} applications={position.applications} setApplyPopUpVisible={setApplyPopUpVisible} isApplicable={!isMyProject} projectId={project.id} position={position} key={i} setProject={setProject} />)}</div>
+            </>}
         </div>)
 }
 export default ProjectDetails

@@ -80,3 +80,13 @@ export const addProjectToUser = async (id: string, projectId: string) => {
         projects: arrayUnion(projectId)
     });
 }
+
+export const addProjectToUserByUserName = async (userName: string, projectId: string) => {
+    const usersRef = collection(dbConnection, "users");
+    const q = query(usersRef, where("username", "==", userName));
+    const querySnapshot = await getDocs(q);
+    const useref = querySnapshot.docs[0].ref;
+    await updateDoc(useref, {
+        projects: arrayUnion(projectId)
+    });
+}

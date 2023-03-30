@@ -20,9 +20,10 @@ const ProfileLink = ({ name, value }: ProfileLinkProps) => {
     }, [])
 
     return (
-        <a href={value} rel="noreferrer" target="_blank" className='profile-one-link'>
+
+        <a href={value} rel="noreferrer" target="_blank" className=''>
             <img src={image ? image : enlace} alt="" style={{ width: '30px', height: '30px' }} />
-            <label>{name}</label>
+            {name}
         </a>
     )
 }

@@ -14,9 +14,7 @@ const MyProjects = () => {
 
     useEffect(() => {
         const getProjects = async () => {
-            console.log(user);
             const projects = await getUserExternalProjects(user!.uid);
-            console.log(projects);
             setUserProjects(projects);
         }
         getProjects();

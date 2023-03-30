@@ -1,0 +1,24 @@
+.landing-page-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.join-us {
+    margin-top: 5rem;
+}
+
+.landing-page-logo {
+    width: 10rem;
+    margin: 1rem 0;
+
+}
+
+.title-landing {
+    margin-top: 2rem;
+    padding: 1rem;
+}
+
+p {
+    line-height: 25px;
+}

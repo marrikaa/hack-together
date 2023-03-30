@@ -32,8 +32,8 @@ const RegistrationForm = () => {
     }
 
     return (
-        <>
-            <form onSubmit={formSubmitted} className='login-form'>
+        <div className='login-form'>
+            <form onSubmit={formSubmitted} className='formInput'>
                 <h2>Register</h2>
                 <h3>{wrongInput}</h3>
                 <input name='email' placeholder='Your email adress' type="email" />
@@ -43,7 +43,7 @@ const RegistrationForm = () => {
                 <button className='red-button'>Register</button>
                 {wrongInput !== "" && <label>{wrongInput}</label>}
             </form>
-        </>
+        </ div>
     )
 }
 

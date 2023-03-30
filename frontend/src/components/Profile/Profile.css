@@ -18,3 +18,8 @@
     width: 20px;
     height: 20px;
 }
+
+.link-image-and-text {
+    display: flex;
+
+}
