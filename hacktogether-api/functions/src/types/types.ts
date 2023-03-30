@@ -23,6 +23,7 @@ export type Position = {
     description: string,
     skills: string[];
     developer: string;
+    id: string;
 }
 
 export type Project = {
@@ -38,4 +39,20 @@ export type ProjectWthoutId = {
     description: string,
     owner: string,
     positions: Position[],
+}
+
+export type Message = {
+    senderId: string,
+    receiverUsername: string,
+    messageContent: string,
+}
+
+export type NewConversationType = {
+    id: string,
+    messageContent: Message[],
+}
+
+export type Application = {
+    username: string,
+    message: string,
 }

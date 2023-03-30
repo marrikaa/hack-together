@@ -1,7 +1,7 @@
-import { collection, query, getDocs, setDoc, doc, where } from "firebase/firestore";
+import { collection, query, getDocs, setDoc, doc, where, getDoc } from "firebase/firestore";
 import { ProjectWthoutId } from '../types/types';
 import { dbConnection } from './firebaseConfig';
-import { Project } from '../types/types';
+import { Project, Application, Position } from '../types/types';
 import { getUserById } from './UDbManager'
 import { uuid } from 'uuidv4';
 
@@ -36,6 +36,7 @@ export const getUserProjectsById = async (uid: string): Promise<Project[]> => {
 
 export const createProject = async (params: ProjectWthoutId): Promise<string> => {
     const currentId = uuid();
+    params.positions.forEach(position => position.id = uuid());
     await setDoc(doc(dbConnection, "projects", currentId), {
         title: params.title,
         description: params.description,
@@ -45,6 +46,15 @@ export const createProject = async (params: ProjectWthoutId): Promise<string> =>
     });
     return currentId;
 }
+
+export const addApplicationToProject = async (projectId: string, positionId: string, application: Application) => {
+    const projectRef = doc(dbConnection, "projects", projectId);
+    const project = await getDoc(projectRef);
+    const projectData = project.data();
+    projectData?.positions.filter((position: Position) => positionId === position.id)[0].applications.push(application);
+    await setDoc(doc(dbConnection, "projects", projectId), projectData);
+}
+
 
 
 

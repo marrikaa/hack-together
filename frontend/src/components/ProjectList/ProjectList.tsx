@@ -4,7 +4,7 @@ import { Project } from '../../types/types'
 import { OneProject } from './OneProject'
 import './ProjectList.css'
 
-export const ProjectList = () => {
+const ProjectList = () => {
 
     const [projects, setProjects] = useState<Project[]>([])
 
@@ -23,3 +23,5 @@ export const ProjectList = () => {
         </div>
     )
 }
+
+export default ProjectList

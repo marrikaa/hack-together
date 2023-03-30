@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import express from "express";
-import { createProject, getAllProjects, getProjectsById, getUserProjectsById } from './database/PDbManager';
-import { getUserByUserName, login, register, getAllTags, updateUser, addProjectToUser } from './database/UDbManager';
+import { addApplicationToProject, createProject, getAllProjects, getProjectsById, getUserProjectsById } from './database/PDbManager';
+import { getUserByUserName, login, register, getAllTags, updateUser, addProjectToUser, getAllUsers } from './database/UDbManager';
 import { User } from './types/types';
 
 const functions = require('firebase-functions')
@@ -54,6 +54,15 @@ app.get('/api/profile/:username', async (req, res) => {
     try {
         const user = await getUserByUserName(req.params.username);
         res.status(200).send({ ...user, messages: [] })
+    } catch (e: any) {
+        res.status(500).send({ message: e.message });
+    }
+})
+
+app.get('/api/users', async (req, res) => {
+    try {
+        const users = await getAllUsers();
+        res.status(200).send(users);
     } catch (e: any) {
         res.status(500).send({ message: e.message });
     }
@@ -120,15 +129,21 @@ app.post('/api/profile/:userId/projects', async (req, res) => {
 
 app.get('/api/project/:uid', async (req, res) => {
     try {
-        console.log('user uid is ', req.params.uid);
         const project = await getProjectsById(req.params.uid);
         res.status(200).send(project);
     } catch (e: any) {
         res.status(500).send({ message: e.message });
     }
 })
+app.patch('/api/project/:uid/:positionId', async (req, res) => {
+    try {
 
-
+        const project = await addApplicationToProject(req.params.uid, req.params.positionId, req.body);
+        res.status(200).send(project);
+    } catch (e: any) {
+        res.status(500).send({ message: e.message });
+    }
+})
 
 app.post('/api/project', async (req, res) => {
     try {

@@ -54,6 +54,13 @@ export const getUserByUserName = async (userName: string): Promise<User | undefi
     return querySnapshot.docs[0].data() as User;
 }
 
+export const getAllUsers = async (): Promise<User[] | undefined> => {
+    const usersRef = collection(dbConnection, "users");
+    const querySnapshot = await getDocs(query(usersRef));
+    const users = querySnapshot.docs.map(user => user.data());
+    return users as User[];
+}
+
 export const getAllTags = async (): Promise<Tags[] | undefined> => {
     const tagsRef = collection(dbConnection, "skills");
     const querySnapshot = await getDocs(query(tagsRef));

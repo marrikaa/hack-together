@@ -1,4 +1,7 @@
 export type Message = {
+    senderId: string,
+    receiverUsername: string,
+    messageContent: string,
 }
 
 export type Link = {
@@ -29,6 +32,11 @@ export type Position = {
     description: string,
     skills: string[];
     fullfilled: boolean;
+    applications?: {
+        message: string,
+        username: string
+    }[]
+    id?: string | undefined
 }
 
 export type Project = {
@@ -45,4 +53,9 @@ export type ProjectWithoutId = {
     description: string,
     owner: string,
     positions: Position[],
+}
+
+export type Application = {
+    username: string,
+    message: string,
 }
