@@ -27,8 +27,8 @@ export const OneUser = ({ username, img, about, links, skills, }: OneUserProps) 
             <div className='flex'>
                 {skills?.map((skill, i) => <label key={i} className='skill-tag'>{skill}</label>)}
             </div>
-            <div className='flex'>
-                {links?.map((link, i) => <ProfileLink key={i} value={link.value} name={link.name} />)}
+            <div className='one-position-skill-container'>
+                {links?.map((link, i) => <ProfileLink key={i} index={i} link={link} editEnabled={false} />)}
             </div>
         </div >
     )

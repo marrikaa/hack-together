@@ -1,0 +1,42 @@
+.pop-up.new-position {
+    height: auto;
+    padding: 1.5em;
+}
+
+.pop-up.new-position label {
+    margin-top: 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.pop-up.new-position input {
+    margin-top: 0;
+    width: 60%;
+    word-wrap: break-word;
+}
+
+.pop-up.new-position .text-area-app {
+    width: 60%;
+    margin-top: .2em;
+}
+
+.pop-up.new-position .text-area-app #review-text {
+    margin-top: .2em;
+    margin-bottom: 0;
+}
+
+.add-position-button-div {
+    display: flex;
+    width: 250px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.add-position-button-div button {
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

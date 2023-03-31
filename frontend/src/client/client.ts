@@ -20,7 +20,6 @@ export const createExternalUser = async (username: string, email: string, passwo
 export const getExternalTags = async (): Promise<string[]> => {
     const response = await fetch(`${root}/api/tags`);
     const tags = response.json();
-    console.log(tags);
     return tags
 }
 
@@ -136,6 +135,5 @@ export const rejectDeveloper = async (projectId: string, positionId: string, use
         },
     })
     const text = await response.text();
-    console.log(text);
     return text;
 }

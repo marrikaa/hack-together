@@ -1,12 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { getExternalUser } from '../../client/client';
 import { AppContext } from '../../context/AppContext';
-import { User } from '../../types/types';
 
 const LoginForm = () => {
 
-    const { user, setUser } = useContext(AppContext);
+    const { setUser } = useContext(AppContext);
     const [error, setError] = useState("");
     const navigate = useNavigate();
     const formSubmitted = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -18,7 +17,7 @@ const LoginForm = () => {
             navigate(`/`);
         }
         else {
-            setError(currentUser!.uid);
+            setError(currentUser!.uid.split('Error ')[1].replaceAll(/[()]/g, ""));
         }
     }
 
@@ -30,7 +29,7 @@ const LoginForm = () => {
                 <input name="passwordInput" placeholder='Your password' type="password" />
                 <button className='red-button' type='submit'>log in</button>
             </form>
-            {error && <label>{error}</label>}
+            {error && <label style={{ marginTop: '1em' }}>{error}</label>}
         </div>
     )
 }

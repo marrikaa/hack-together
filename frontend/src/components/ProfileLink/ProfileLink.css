@@ -1,0 +1,21 @@
+.one-profile-link {
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 1em;
+}
+
+.one-profile-link a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.profile-remove-tags-button {
+    border: none;
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    cursor: pointer;
+}

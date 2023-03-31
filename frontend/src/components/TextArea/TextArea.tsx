@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import useAutosizeTextArea from "./useAutosizeTextArea";
 
@@ -24,15 +24,15 @@ const TextArea = ({ canType, currentDescription, onTyping }: PropsForTextArea) =
 
     return (
         <div className="text-area-app">
-            <label htmlFor="review-text">Review:</label>
             <textarea
                 id="review-text"
                 onChange={handleChange}
-                defaultValue={currentDescription}
+                value={currentDescription}
                 readOnly={!canType}
                 ref={textAreaRef}
                 rows={1}
                 className={'profile-description'}
+                style={{ 'border': canType ? '.5px solid black' : 'none' }}
             />
         </div>
     );

@@ -3,6 +3,7 @@ import { Position, Application, Project } from '../../types/types';
 import { ApplyPopUp } from './ApplyPopUp';
 import { ApplicationCard } from './ApplicationCard';
 import { AppContext } from '../../context/AppContext';
+import { Link } from 'react-router-dom';
 
 type OnePositionProps = {
     project?: Project;
@@ -47,21 +48,24 @@ export const OnePosition = ({ project, applications, projectId, position, isAppl
         <div className={`position-div project-list-one-project-container ${position.fullfilled ? "fullfilled-div" : "not-fullfilled"}`}>
             <h2 className='position-title'>{position?.title}</h2>
             <p className='position-description'>{position.description}</p>
-            {position.skills.map((skill, i) => <div key={i}>{skill}</div>)}
-            {!position.fullfilled && isApplicable && !hasApplied &&
+            <div className='one-position-skill-container'>
+                {position.skills.map((skill, i) => <div className='one-position-skill' key={i}>{skill}</div>)}
+            </div>
+            {!position.fullfilled && isApplicable && !hasApplied && user!.username &&
                 <button onClick={applyHandler} className="apply-button">Apply</button>}
-            {position.fullfilled && <h3 className='fullfilled' onClick={applyHandler}>Fullfilled</h3>}
+            {position.fullfilled && <h3 className='fullfilled' onClick={applyHandler}>Fullfilled {isMyProject ? <Link className='application-link-to-profile' to={`profile/${position.developer.username}`}>{`by ${position.developer.username}`}</Link> : ''}</h3>}
             {
                 isMyProject && !position.fullfilled &&
                 <label onClick={expandOrRetract} className='see-applicants-label'>See Applicants {applications?.length}</label>
             }
             {
                 isExpanded && <div className='applications-container'>
-                    {applications?.map(application => <ApplicationCard projectId={projectId!}
+                    {applications?.map((application, i) => <ApplicationCard projectId={projectId!}
                         positionId={position.id!} application={application} project={project!}
-                        setProject={setProject!} />)}
+                        setProject={setProject!} key={i} />)}
                 </div>
             }
+            {!user!.username && <label className='want-to-apply-label'>Want to apply? <Link to='/login'> Log in!</Link></label>}
         </div >
     )
 }

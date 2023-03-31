@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { getExternalTags } from '../../client/client';
 import { Position } from '../../types/types';
-import { uuid } from 'uuidv4';
+import './NewProjectPosition.css';
+import TextArea from '../TextArea/TextArea';
 
 
 
@@ -14,8 +15,8 @@ type NewProjectPositionProps = {
 export const NewProjectPosition = ({ setVisible, positions, setCurrentPositions }: NewProjectPositionProps) => {
 
     const titleRef = useRef<HTMLInputElement>(null);
-    const descriptionRef = useRef<HTMLInputElement>(null);
-
+    const selectRef = useRef<HTMLSelectElement>(null);
+    const [currentDescription, setCurrentDescription] = useState("");
     const [tagsState, setTagsState] = useState<string[]>([]);
     const [currentSelectedTags, setCurrentSelectedTags] = useState<string[]>([]);
 
@@ -23,15 +24,19 @@ export const NewProjectPosition = ({ setVisible, positions, setCurrentPositions 
         setVisible(false);
     }
 
+    const setDescription = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setCurrentDescription(e.currentTarget.value);
+    }
+
     const save = () => {
         const newPosition: Position = {
             title: titleRef.current!.value,
-            description: descriptionRef.current!.value,
+            description: currentDescription,
             skills: currentSelectedTags,
             fullfilled: false,
+            developer: { username: '' },
             applications: []
         }
-
         const tempPositions = [...positions];
         tempPositions.push(newPosition);
         setCurrentPositions(tempPositions);
@@ -50,6 +55,7 @@ export const NewProjectPosition = ({ setVisible, positions, setCurrentPositions 
         if (!currentSelectedTags.includes(event.currentTarget.value)) {
             setCurrentSelectedTags([...currentSelectedTags, event.currentTarget.value])
         }
+        selectRef.current!.value = "default";
     }
 
     const removeTag = (index: number) => {
@@ -60,26 +66,27 @@ export const NewProjectPosition = ({ setVisible, positions, setCurrentPositions 
 
     return (
         <div className='pop-up-container'>
-            <div className='pop-up'>
+            <div className='pop-up new-position'>
                 <h1>Add new position</h1>
-                <label>title</label>
+                <label>Title</label>
                 <input ref={titleRef} />
-                <label>description</label>
-                <input ref={descriptionRef} />
-                <select onChange={addTag}>
-                    <option selected disabled></option>
+                <label>Description</label>
+                <TextArea canType={true} currentDescription={currentDescription} onTyping={setDescription} />
+                <label>Add tech</label>
+                <select onChange={addTag} ref={selectRef}>
+                    <option selected disabled value="default"></option>
                     {tagsState.map((tag, i) => <option key={i} value={tag} >{tag}</option>)}
                 </select>
-                <ul>
+                <div className='add-tag-list'>
                     {currentSelectedTags.map((tag, i) => {
-                        return <li>{tag}<button key={i} onClick={() => removeTag(i)}>x</button></li>
+                        return <div className='add-tag-list-container'>{tag}<button key={i} onClick={() => removeTag(i)}>x</button></div>
                     })}
-                </ul>
+                </div>
                 <div className='pop-up-button-container'>
-                    <button className='red-button' onClick={close}>Exit</button>
+                    <button className='red-button not-important' onClick={close}>Exit</button>
                     <button className='red-button' onClick={save}>Save</button>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }

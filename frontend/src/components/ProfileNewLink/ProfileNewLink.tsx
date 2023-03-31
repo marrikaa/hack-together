@@ -40,7 +40,7 @@ export const ProfileNewLink = ({ setVisible, setLinks, links }: ProfileNewLinkPr
                 <label>value</label>
                 <input ref={valueRef} />
                 <div className='pop-up-button-container'>
-                    <button className='red-button' onClick={close}>Exit</button>
+                    <button className='red-button not-important' onClick={close}>Exit</button>
                     <button className='red-button' onClick={save}>Save</button>
                 </div>
             </div>

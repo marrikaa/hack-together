@@ -31,16 +31,27 @@
 .positions-container {
     display: flex;
     flex-direction: column;
-
 }
 
 .application-card {
+    margin-bottom: 1rem;
     height: 100px;
     display: flex;
     align-items: top;
     justify-content: space-between;
     padding: 1.5em;
     border: .5px solid black;
+    border-radius: 10px;
+}
+
+.application-link-to-profile {
+    text-decoration: none;
+
+}
+
+.application-link-to-profile link {
+    text-decoration: none;
+    color: #BA1200;
 }
 
 .project-details-project-owner-name {
@@ -52,4 +63,74 @@
 .project-details-description {
     margin-top: 1.5em;
     margin-bottom: 1.5em;
+}
+
+.one-position-skill {
+    margin-right: 1em;
+    font-size: 1em;
+    padding: .4em;
+    background-color: #BA1200;
+    color: white;
+    border-radius: 10px;
+}
+
+.one-position-skill-container {
+    margin-top: 1em;
+    display: flex;
+}
+
+.see-applicants-label {
+    margin-top: 2em;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.one-position-positions-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.one-project-open-position {
+    font-size: 1em;
+}
+
+.want-to-apply-label {
+    margin-top: 1em;
+}
+
+.pop-up.apply {
+    padding: 2em;
+}
+
+.button-container button {
+    margin-left: 1rem;
+}
+
+.suggestion-text {
+    font-size: 20px;
+}
+
+.application-card-username {
+    font-size: .8em;
+    color: black;
+}
+
+.exitApplic-button {
+    background-color: white;
+    color: black;
+    border: solid black 1px;
+}
+
+.apply {
+    height: auto;
+    justify-content: space-between;
+}
+
+.apply .text-area-app {
+    width: 80%;
+}
+
+.exitApplic-button:hover {
+    background-color: black;
+    color: white;
 }

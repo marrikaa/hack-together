@@ -88,8 +88,9 @@ const Profile = () => {
                                 width="40px" height="40px" alt="" />
                             }
                         </div>
-                        {<TextArea canType={editEnabled} currentDescription={profileUser.about} onTyping={changeCurrentDescription} />}
+                        {<TextArea canType={editEnabled} currentDescription={currentDescription} onTyping={changeCurrentDescription} />}
                         <h2>Tech stack</h2>
+
                         <div className='profile-tags-container'>
                             {currentTags.map((skill, i) => {
                                 return (<div className='skill-tag' key={i}><p>{skill}</p>
@@ -98,18 +99,21 @@ const Profile = () => {
                             })}
                             {editEnabled && <img src={addIcon} onClick={addTag} className='new-tag-button' alt="" />}
                         </div>
+
                         <h2>Social media and portfolio</h2>
+
                         <div className='profile-links-container'>
                             {currentLinks.map((link, i) => {
-                                return (<div className='profile-one-link editable'><ProfileLink name={link.name} value={link.value} />{editEnabled && <button className='profile-remove-link-button' onClick={() => removeLink(i)}>x</button>}</div>)
+                                return <ProfileLink key={i} link={link} index={i} removeLink={removeLink} editEnabled={editEnabled} />
                             })}
                             {editEnabled && <img src={addIcon} className='new-tag-button' onClick={() => setLinkDialogVisible(true)} alt="" />}
-
-                            {editEnabled && <button className='red-button' onClick={save}>Save</button>}
                         </div>
-                    </div >}
+
+                        {editEnabled && <button className='red-button' onClick={save}>Save</button>}
+                    </div >
+                }
             </>}
-        </div>
+        </div >
     )
 }
 export default Profile;

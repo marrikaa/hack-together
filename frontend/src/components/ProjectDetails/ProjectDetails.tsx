@@ -30,6 +30,7 @@ const ProjectDetails = () => {
 
 
 
+
     return (
         <div className='project-details'>
             {!project && <LoadingSpinner />}

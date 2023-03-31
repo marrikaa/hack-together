@@ -22,7 +22,7 @@ const ProjectList = () => {
 
         getProjects();
         const getUserProjects = async () => {
-            if (user!.username) {
+            if (user) {
                 const projects = await getUserExternalProjects(user!.uid);
                 const stringProjects = projects.map((project: Project) => project.id);
                 setUserProjects(stringProjects);
@@ -38,12 +38,12 @@ const ProjectList = () => {
                 <h1>Projects</h1>
                 <div className='project-list-button-container'>
                     <div className='flex'>
-                        <button className={`red-button myprojects-button ${showMyProjects ? 'selected '
-                            : ''}`} onClick={() => setShowMyProjects(true)}>My projects</button>
+                        {user && <button className={`red-button myprojects-button ${showMyProjects ? 'selected '
+                            : ''}`} onClick={() => setShowMyProjects(true)}>My projects</button>}
                         <button className={`red-button allprojects-button ${!showMyProjects ? 'selected '
                             : ''}`} onClick={() => setShowMyProjects(false)}>All projects</button>
                     </div>
-                    <button className="create-project-button" onClick={() => navigate('/createproject')}>Create project</button>
+                    <button className="red-button not-important" onClick={() => navigate('/createproject')}>Create project</button>
                 </div>
             </>}
             {projects &&
@@ -54,7 +54,7 @@ const ProjectList = () => {
                         positions={project.positions} />)
             }
             {
-                projects && showMyProjects && projects.filter(project =>
+                user && projects && showMyProjects && projects.filter(project =>
                     userProjects.includes(project.id)).map((project, i) => {
                         return (<OneProject title={project.title} key={i}
                             description={project.description} currentProject={project}

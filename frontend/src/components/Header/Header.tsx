@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 import { User } from '../../types/types';
 import './Header.css'
@@ -7,11 +7,11 @@ import './Header.css'
 
 const Logo = require('../../assets/images/logo.png');
 const emailWhite = require('../../assets/images/email_white.png');
-const user = require('../../assets/images/user.png');
+//const user = require('../../assets/images/user.png');
 const userWhite = require('../../assets/images/user-white.png');
 
 const Header = () => {
-    const { user, setUser, getUser } = useContext(AppContext)
+    const { user, setUser } = useContext(AppContext)
     const navigate = useNavigate();
     const go = () => {
         navigate('/');

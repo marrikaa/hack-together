@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { createExternalUser, getExternalUser } from '../../client/client';
 import { AppContext } from '../../context/AppContext';
+import './RegistrationForm.css'
 
 const RegistrationForm = () => {
 
@@ -39,8 +40,8 @@ const RegistrationForm = () => {
                 <input name='email' placeholder='Your email adress' type="email" />
                 <input name='username' placeholder='Your username' type="text" />
                 <input name='password' placeholder='Your password' type="password" />
-                <input name='password_2' placeholder='Your password' type="password" />
-                <button className='red-button'>Register</button>
+                <input name='password_2' placeholder='Confirm password' type="password" />
+                <button className='red-button register-button' type='submit'>Register</button>
                 {wrongInput !== "" && <label>{wrongInput}</label>}
             </form>
         </ div>

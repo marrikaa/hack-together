@@ -2,17 +2,6 @@
     font-weight: 500;
 }
 
-.new-tag-button {
-    cursor: pointer;
-    height: 10px;
-    background: #9DD1F1;
-    border: 1px solid black;
-    padding: .5rem;
-    border-radius: 50%;
-}
-
-
-
 .remove-tag-button {
     cursor: pointer;
     width: 20px;
@@ -21,5 +10,39 @@
 
 .link-image-and-text {
     display: flex;
+}
 
+.profile-links-container {
+    display: flex;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    align-items: center;
+}
+
+.profile-remove-link-button {
+    border: none;
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 50%;
+    color: black;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.new-tag-button {
+    border-radius: 50%;
+    height: 20px;
+    margin-left: 2em;
+    width: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+.profile-tags-container {
+    width: 100%;
+    display: flex;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    align-items: center;
 }

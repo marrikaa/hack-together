@@ -33,7 +33,8 @@ export type Position = {
     skills: string[];
     fullfilled: boolean;
     applications: Application[],
-    id?: string | undefined
+    id?: string | undefined,
+    developer: { username: string }
 }
 
 export type Project = {

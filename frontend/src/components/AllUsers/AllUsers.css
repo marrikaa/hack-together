@@ -12,13 +12,14 @@
     color: #BA1200;
 }
 
-
 .user-card-title {
     margin-top: .5rem;
     margin-bottom: 1rem;
     font-weight: 500;
+    cursor: pointer;
 }
 
 .about-p {
     word-wrap: break-word;
+    margin-bottom: 1.5em;
 }
