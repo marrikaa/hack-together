@@ -34,7 +34,7 @@ const ProjectList = () => {
 
     return (
         <div>
-            {user!.username && <>
+            {user?.username && <>
                 <h1>Projects</h1>
                 <div className='project-list-button-container'>
                     <div className='flex'>

@@ -1,8 +1,9 @@
-import { PresentationControls, Stage, useGLTF } from '@react-three/drei'
-import React, { ForwardRefExoticComponent, RefAttributes, RefObject, useRef } from 'react'
+import { OrbitControls, PresentationControls, Stage, useGLTF } from '@react-three/drei'
+import React, { ForwardRefExoticComponent, RefAttributes, RefObject, useEffect, useRef, useState } from 'react'
 import { Canvas, Props } from 'react-three-fiber';
 import './LandingImage.css';
 import * as BABYLON from 'babylonjs';
+import THREE from 'three';
 
 export const LandingImage = () => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -35,18 +36,28 @@ export const LandingImage = () => {
         return scene;
     }
 
+    const [rotation, setRotation] = useState(0);
+
     const Model = (props: any) => {
         const { scene } = useGLTF('./world.glb');
         return <primitive object={scene} />
     }
 
+    useEffect(() => {
+        setInterval(rotate, 10);
+    })
+
+    const rotate = () => {
+        setRotation((rotation) => rotation + 0.000008);
+    }
+    <OrbitControls enableZoom={false} />
     return (
         <div className='canvas-3d'>
-            < Canvas ref={canvasRef} dpr={[1, 2]} shadows camera={{ fov: 45 }
-            } style={{ 'position': 'absolute', width: '80%', height: '80%' }} >
+            < Canvas ref={canvasRef} dpr={[1, 2]} camera={{ fov: 45, near: 100, far: 100 }}
+                style={{ 'position': 'absolute', width: '80%', height: '80%' }} >
                 <color attach="background" args={["#ffffff"]} />
-                <PresentationControls speed={1.5} global zoom={1} polar={[-0.1, Math.PI / 4]} >
-                    <Stage environment={undefined}>
+                <PresentationControls speed={1.5} rotation={[0, rotation, 0]} polar={[0, Math.PI / 4]} >
+                    <Stage environment={"dawn"}>
                         <Model scale={1} />
                     </Stage>
                 </PresentationControls>
@@ -54,3 +65,4 @@ export const LandingImage = () => {
         </div >
     )
 }
+

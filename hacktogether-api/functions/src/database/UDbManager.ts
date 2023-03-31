@@ -35,7 +35,6 @@ export const register = async (username: string, email: string, password: string
 
 
 export const getUserById = async (uid: string): Promise<User> => {
-    console.log(uid);
     const docRef = doc(dbConnection, "users", uid);
     const docSnap = (await getDoc(docRef)).data();
     return docSnap as User;
