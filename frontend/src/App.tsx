@@ -12,6 +12,8 @@ import ProjectDetails from './components/ProjectDetails/ProjectDetails';
 import MyProjects from './components/MyProjects/MyProjects';
 import CreateProject from './components/CreateProject/CreateProject';
 import AllUsers from './components/AllUsers/AllUsers';
+import { LandingImage } from './components/LandingImage/LandingImage';
+import { Home } from './components/Home/Home';
 
 
 
@@ -29,14 +31,16 @@ function App() {
       <Header />
       <div className='application-box'>
         <Routes>
-          <Route path="/" element={<LandingPage />}></Route>
+          <Route path="/" element={<Home />}></Route>
           <Route path="/register" element={<RegistrationForm />}></Route>
           <Route path="/login" element={<LoginForm />}></Route>
           <Route path={`/profile/:username`} element={<Profile />}></Route>
           <Route path="/projectlist" element={<ProjectList />}></Route>
           <Route path="/allUsers" element={<AllUsers />}></Route>
+          <Route path="/about" element={<LandingPage />}></Route>
           <Route path="/createproject" element={<CreateProject />}></Route>
           <Route path='/project/:projectId' element={<ProjectDetails />}></Route>
+
           {/* <Route path='/profile/:username/projects' element={<MyProjects />}></Route> */}
         </Routes>
       </div>

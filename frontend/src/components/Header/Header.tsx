@@ -31,6 +31,7 @@ const Header = () => {
                 {/* {user?.username && <div className='header-link-div' onClick={() => navigate(`/profile/${user.username}/projects`)}>My Projects</div>} */}
                 {user?.username && <img onClick={() => navigate(`/profile/${user?.username}`)} src={userWhite} className='header-link-div header-icon' alt="" />}
                 {user?.username && <img className="header-link-div header-icon" onClick={() => navigate('/messages')} src={emailWhite} alt="" />}
+                <div className='header-link-div' onClick={() => navigate('/about')}>About</div>
                 <div className='header-link-div' onClick={() => navigate('/projectlist')}>Projects</div>
                 <div className='header-link-div' onClick={() => navigate('/allUsers')}>Users</div>
                 {!user?.username && <div className='header-link-div' onClick={() => navigate('/login')}>Login</div>}
