@@ -1,0 +1,11 @@
+.back-arrow {
+    height: 30px;
+    position: absolute;
+    left: 3vw;
+    top: 10vh;
+    cursor: pointer;
+}
+
+.back-arrow:hover {
+    scale: 1.2;
+}

@@ -1,0 +1,15 @@
+.profile-image-pop-up-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.image-picker-image {
+    width: 50px;
+    margin: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.image-picker-image.selected {
+    border: 2px solid red;
+}

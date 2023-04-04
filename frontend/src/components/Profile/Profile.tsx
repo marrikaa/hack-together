@@ -1,29 +1,39 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getExternalUserByUserName, updateExternalProfile } from '../../client/client';
 import { AppContext } from '../../context/AppContext';
-import { Link, User } from '../../types/types';
+import { LinkType, User } from '../../types/types';
+import ImageUpload from '../ImageUpload/ImageUpload';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import ProfileLink from '../ProfileLink/ProfileLink';
 import { ProfileNewLink } from '../ProfileNewLink/ProfileNewLink';
 import { ProfileNewTag } from '../ProfileNewTag/ProfileNewTag';
+import { SelectImagePopUp } from '../SelectImagePopUp.tsx/SelectImagePopUp';
 import TextArea from '../TextArea/TextArea';
-import './Profile.css'
+import './Profile.css';
+import ProfileImages from '../../assets/images/profileImages';
+
+
 
 const addIcon = require('../../assets/images/add.png');
 const deleteIcon = require('../../assets/images/delete.png');
+const emailIcon = require('../../assets/images/email.png');
+const editIcon = require('../../assets/images/edit-246.png');
 
 const Profile = () => {
-    const [isEditButton, setisEditButton] = useState(false);
+    const [isMyProfile, setIsMyProfile] = useState(false);
+    const [ImagePopUpVisible, setImagePopUpVisible] = useState(false);
     const [editEnabled, setEditEnabled] = useState(false);
     const [profileUser, setProfileUser] = useState<User>(null);
     const [tagDialogVisible, setTagDialogVisible] = useState(false);
     const [linkDialogVisible, setLinkDialogVisible] = useState(false);
     const [currentDescription, setCurrentDescription] = useState<string>("");
-    const [currentLinks, setCurrentLinks] = useState<Link[]>([]);
+    const [currentLinks, setCurrentLinks] = useState<LinkType[]>([]);
     const [currentTags, setCurrentTags] = useState<string[]>([]);
+    const [currentImage, setCurrentImage] = useState(-1);
     const { username } = useParams();
     const { user } = useContext(AppContext);
+
 
     useEffect(() => {
         const getUser = async () => {
@@ -32,12 +42,13 @@ const Profile = () => {
             setCurrentDescription(newUser!.about);
             setCurrentTags(newUser!.skills)
             setCurrentLinks(newUser!.links);
+            setCurrentImage(newUser!.img || -1);
             if (user && username === user.username) {
-                setisEditButton(true);
+                setIsMyProfile(true);
             }
         }
         getUser();
-    }, [user, username]);
+    }, [username, user]);
 
     const addTag = () => {
         setTagDialogVisible(true);
@@ -53,7 +64,8 @@ const Profile = () => {
                 ...user,
                 about: currentDescription,
                 links: currentLinks,
-                skills: currentTags
+                skills: currentTags,
+                img: currentImage
             }
             updateExternalProfile(updates);
             setEditEnabled(false);
@@ -72,27 +84,41 @@ const Profile = () => {
         setCurrentLinks(tempLinks);
     }
 
+    const editImage = () => {
+        if (editEnabled) {
+            setImagePopUpVisible(true)
+        }
+    }
+
     return (
         <div>
             {!profileUser && <LoadingSpinner />}
             {profileUser && <>
                 {tagDialogVisible && <ProfileNewTag setVisible={setTagDialogVisible} setTags={setCurrentTags} tags={currentTags} />}
                 {linkDialogVisible && <ProfileNewLink setVisible={setLinkDialogVisible} setLinks={setCurrentLinks} links={currentLinks} />}
+                {ImagePopUpVisible && <SelectImagePopUp currentImageIndex={currentImage} setSelectedIndex={setCurrentImage} setVisible={setImagePopUpVisible} />}
                 {profileUser &&
                     <div>
                         <div className='about-header'>
-                            <h1 className='profile-username'>{profileUser.username}</h1>
-                            {isEditButton && !editEnabled && <img className='edit-button'
+                            {/* <ImageUpload isEditable={editEnabled} currentImage={currentImage || null} setCurrentImage={updateImage} /> */}
+                            <div className='profile-picture-and-username'>
+                                {< img className='profile-picture' src={currentImage === -1 ? 'https://www.vhv.rs/dpng/d/526-5268314_empty-avatar-png-user-icon-png-transparent-png.png' : ProfileImages[currentImage]} alt='' onClick={editImage} />}
+                                <h1 className='profile-username'>{profileUser.username}</h1>
+                            </div>
+                            {isMyProfile && !editEnabled && <img className='edit-button'
                                 onClick={() => setEditEnabled((editEnabled) => !editEnabled)}
-                                src="https://icons.veryicon.com/png/o/miscellaneous/linear-small-icon/edit-246.png"
+                                src={editIcon}
                                 width="40px" height="40px" alt="" />
+                            }
+                            {!isMyProfile && user?.username &&
+                                <Link to={`/conversation/${profileUser.username}`}> <img className='send-message-icon' src={emailIcon} alt="" /></Link>
                             }
                         </div>
                         {<TextArea canType={editEnabled} currentDescription={currentDescription} onTyping={changeCurrentDescription} />}
                         <h2>Tech stack</h2>
 
                         <div className='profile-tags-container'>
-                            {currentTags.map((skill, i) => {
+                            {currentTags?.map((skill, i) => {
                                 return (<div className='skill-tag' key={i}><p>{skill}</p>
                                     {editEnabled && <img src={deleteIcon} className='remove-tag-button' alt="" onClick={() => removeTag(i)} />}
                                 </div>)
@@ -103,7 +129,7 @@ const Profile = () => {
                         <h2>Social media and portfolio</h2>
 
                         <div className='profile-links-container'>
-                            {currentLinks.map((link, i) => {
+                            {currentLinks?.map((link, i) => {
                                 return <ProfileLink key={i} link={link} index={i} removeLink={removeLink} editEnabled={editEnabled} />
                             })}
                             {editEnabled && <img src={addIcon} className='new-tag-button' onClick={() => setLinkDialogVisible(true)} alt="" />}

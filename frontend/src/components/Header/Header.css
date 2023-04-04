@@ -19,6 +19,7 @@
     display: flex;
     align-items: center;
     margin-left: 3%;
+    cursor: pointer;
 }
 
 .header-menu {
@@ -31,3 +32,26 @@
 .header-icon {
     height: 20px;
 }
+
+.notification-number {
+    background-color: red;
+    height: .7em;
+    width: .7em;
+    position: absolute;
+    padding: .5em;
+    border-radius: 50%;
+    color: white;
+    right: 0;
+    top: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.message-header-div {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.message-icon {}

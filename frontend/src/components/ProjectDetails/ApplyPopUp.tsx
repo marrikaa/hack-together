@@ -1,16 +1,17 @@
 import React, { useContext, useState } from 'react'
-import { addApplicationToPosition } from '../../client/client';
+import { addApplicationToPosition, addMessagesInConversations, addProjectToUser } from '../../client/client';
 import { AppContext } from '../../context/AppContext';
 import TextArea from '../TextArea/TextArea';
 import './ProjectDetails.css'
+import { Project } from '../../types/types';
 
 type ApplyPopUpProps = {
     setVisible: (bool: boolean) => void;
     selectedPositionId: string;
-    projectId?: string;
+    project: Project;
 }
 
-export const ApplyPopUp = ({ setVisible, selectedPositionId, projectId }: ApplyPopUpProps) => {
+export const ApplyPopUp = ({ setVisible, selectedPositionId, project }: ApplyPopUpProps) => {
     const { user } = useContext(AppContext);
     const [currentMessage, setCurrentMessage] = useState("");
 
@@ -18,8 +19,22 @@ export const ApplyPopUp = ({ setVisible, selectedPositionId, projectId }: ApplyP
         setVisible(false);
     }
 
+    const acceptedUserMessages = async () => {
+        const position = project.positions.filter(p => p.id === selectedPositionId)[0];
+        await addMessagesInConversations({
+            senderUsername: user!.username,
+            messageContent: `(${user!.username} wants to apply for the position ${position.title} in your project ${project.title}) Message : ${currentMessage}`,
+        }, project.owner)
+    }
+
+    const addProjectToUserLocal = async () => {
+        await addProjectToUser(user!.uid, project.id);
+    }
+
     const submit = () => {
-        addApplicationToPosition(projectId!, selectedPositionId, { username: user!.username, message: currentMessage });
+        addApplicationToPosition(project.id!, selectedPositionId, { username: user!.username, message: currentMessage });
+        addProjectToUserLocal();
+        acceptedUserMessages();
         setVisible(false);
     }
     const changeCurrentMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

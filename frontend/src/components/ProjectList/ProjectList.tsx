@@ -22,7 +22,7 @@ const ProjectList = () => {
 
         getProjects();
         const getUserProjects = async () => {
-            if (user) {
+            if (user && projects) {
                 const projects = await getUserExternalProjects(user!.uid);
                 const stringProjects = projects.map((project: Project) => project.id);
                 setUserProjects(stringProjects);
@@ -34,7 +34,7 @@ const ProjectList = () => {
 
     return (
         <div>
-            {user?.username && <>
+            {user?.username && projects && <>
                 <h1>Projects</h1>
                 <div className='project-list-button-container'>
                     <div className='flex'>
@@ -54,7 +54,7 @@ const ProjectList = () => {
                         positions={project.positions} />)
             }
             {
-                user && projects && showMyProjects && projects.filter(project =>
+                userProjects && user && projects && showMyProjects && projects.filter(project =>
                     userProjects.includes(project.id)).map((project, i) => {
                         return (<OneProject title={project.title} key={i}
                             description={project.description} currentProject={project}

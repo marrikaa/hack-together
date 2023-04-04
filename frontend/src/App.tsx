@@ -14,6 +14,10 @@ import CreateProject from './components/CreateProject/CreateProject';
 import AllUsers from './components/AllUsers/AllUsers';
 import { LandingImage } from './components/LandingImage/LandingImage';
 import { Home } from './components/Home/Home';
+import { MailBox } from './components/MailBox/MailBox';
+import { Conversation } from './components/Conversation/Conversation';
+import ImageUpload from './components/ImageUpload/ImageUpload';
+import BackArrow from './components/BackArrow/BackArrow';
 
 
 
@@ -29,6 +33,7 @@ function App() {
   return (
     <div className="App">
       <Header />
+      <BackArrow />
       <div className='application-box'>
         <Routes>
           <Route path="/" element={<Home />}></Route>
@@ -39,11 +44,15 @@ function App() {
           <Route path="/allUsers" element={<AllUsers />}></Route>
           <Route path="/about" element={<LandingPage />}></Route>
           <Route path="/createproject" element={<CreateProject />}></Route>
-          <Route path='/project/:projectId' element={<ProjectDetails />}></Route>
+          <Route path="/messages" element={<MailBox />}></Route>
 
+          <Route path='/project/:projectId' element={<ProjectDetails />}></Route>
+          <Route path='/conversation/:receiverUsername' element={<Conversation />}></Route>
           {/* <Route path='/profile/:username/projects' element={<MyProjects />}></Route> */}
+
         </Routes>
       </div>
+
     </div >
   );
 }

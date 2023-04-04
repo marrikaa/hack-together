@@ -3,6 +3,9 @@ import { collection, setDoc, doc, getDoc, where, query, getDocs, updateDoc, arra
 import { User } from '../types/types';
 import { authenticator, dbConnection } from './firebaseConfig';
 import { Tags } from '../types/types';
+// import { ref, uploadBytesResumable } from 'firebase/storage';
+// import { uuid } from 'uuidv4';
+
 
 
 const isUserUnique = async (username: string): Promise<boolean> => {
@@ -48,7 +51,8 @@ export const login = async (email: string, password: string): Promise<User | und
 
 export const getUserByUserName = async (userName: string): Promise<User | undefined> => {
     const usersRef = collection(dbConnection, "users");
-    const q = query(usersRef, where("username", "==", userName));
+    const usernameWithCapital: string = userName.charAt(0).toUpperCase() + userName.slice(1)
+    const q = query(usersRef, where("username", "in", [userName, usernameWithCapital]));
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs[0].data() as User;
 }
@@ -89,3 +93,14 @@ export const addProjectToUserByUserName = async (userName: string, projectId: st
         projects: arrayUnion(projectId)
     });
 }
+
+// export const uploadImageAndSetUserImage = async (userId: string, file: File) => {
+//     const metadata = {
+//         contentType: 'image/jpeg'
+//     };
+//     const storageRef = ref(dbStorage, 'images/' + file.name);
+//     const uploadTask = uploadBytesResumable(storageRef, file, metadata);
+
+//     // const storageRef = ref(dbStorage, 'image.png');
+//     // uploadBytesResumable(storageRef, file);
+// }

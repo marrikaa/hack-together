@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { getExternalTags } from '../../client/client';
-import { Link } from '../../types/types';
+import { LinkType } from '../../types/types';
 
 type ProfileNewLinkProps = {
     setVisible: (bool: boolean) => void;
-    setLinks: (Links: Link[]) => void;
-    links: Link[];
+    setLinks: (Links: LinkType[]) => void;
+    links: LinkType[];
 }
 
 export const ProfileNewLink = ({ setVisible, setLinks, links }: ProfileNewLinkProps) => {
@@ -23,7 +23,7 @@ export const ProfileNewLink = ({ setVisible, setLinks, links }: ProfileNewLinkPr
     }
 
     const save = () => {
-        const newLink: Link = {
+        const newLink: LinkType = {
             name: nameRef.current!.value,
             value: addHTTPS(valueRef.current!.value)
         }

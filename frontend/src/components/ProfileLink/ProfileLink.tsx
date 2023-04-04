@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { socialMediaImages } from '../../assets/images/socialMediaIcons';
 import enlace from '../../assets/images/socialMediaIcons/enlace.png'
-import { Link } from '../../types/types';
+import { LinkType } from '../../types/types';
 import './ProfileLink.css';
 
 
 type ProfileLinkProps = {
-    link: Link;
+    link: LinkType;
     removeLink?: (index: number) => void;
     index: number;
     editEnabled: boolean;

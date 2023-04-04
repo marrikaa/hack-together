@@ -73,7 +73,7 @@ export const NewProjectPosition = ({ setVisible, positions, setCurrentPositions 
                 <label>Description</label>
                 <TextArea canType={true} currentDescription={currentDescription} onTyping={setDescription} />
                 <label>Add tech</label>
-                <select onChange={addTag} ref={selectRef}>
+                <select onChange={addTag} ref={selectRef} className='pop-up-select'>
                     <option selected disabled value="default"></option>
                     {tagsState.map((tag, i) => <option key={i} value={tag} >{tag}</option>)}
                 </select>

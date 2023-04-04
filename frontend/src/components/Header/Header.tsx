@@ -11,7 +11,7 @@ const emailWhite = require('../../assets/images/email_white.png');
 const userWhite = require('../../assets/images/user-white.png');
 
 const Header = () => {
-    const { user, setUser } = useContext(AppContext)
+    const { user, setUser, notifications } = useContext(AppContext)
     const navigate = useNavigate();
     const go = () => {
         navigate('/');
@@ -30,7 +30,7 @@ const Header = () => {
             <div className='header-menu'>
                 {/* {user?.username && <div className='header-link-div' onClick={() => navigate(`/profile/${user.username}/projects`)}>My Projects</div>} */}
                 {user?.username && <img onClick={() => navigate(`/profile/${user?.username}`)} src={userWhite} className='header-link-div header-icon' alt="" />}
-                {user?.username && <img className="header-link-div header-icon" onClick={() => navigate('/messages')} src={emailWhite} alt="" />}
+                {user?.username && <div className='message-header-div'><img className="header-link-div header-icon message-icon" onClick={() => navigate('/messages')} src={emailWhite} alt="" /><label className='notification-number'>{notifications.length}</label></div>}
                 <div className='header-link-div' onClick={() => navigate('/about')}>About</div>
                 <div className='header-link-div' onClick={() => navigate('/projectlist')}>Projects</div>
                 <div className='header-link-div' onClick={() => navigate('/allUsers')}>Users</div>

@@ -78,10 +78,3 @@ export const fromApplicationtoDevelopers = async (projectId: string, positionId:
     await addProjectToUserByUserName(username, projectId);
 }
 
-
-
-
-
-
-
-

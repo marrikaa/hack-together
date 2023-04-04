@@ -24,7 +24,6 @@ export const OneProject = ({ title, description, positions, currentProject }: On
             <div className='one-position-positions-container'>
                 {positions.map((position, i) => <label className='one-project-open-position' key={i}>{position.title}</label>)}
             </div>
-
         </div >
     )
 }

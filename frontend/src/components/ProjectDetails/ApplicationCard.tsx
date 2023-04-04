@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { acceptDeveloper, rejectDeveloper } from '../../client/client';
+import { acceptDeveloper, addMessagesInConversations, rejectDeveloper } from '../../client/client';
+import { AppContext } from '../../context/AppContext';
 import { Application, Project } from '../../types/types';
 import './ProjectDetails.css'
 
@@ -13,39 +14,63 @@ type ApplicationCardProps = {
 }
 
 export const ApplicationCard = ({ projectId, positionId, application, project, setProject }: ApplicationCardProps) => {
-
+    const { user } = useContext(AppContext);
     const setPositionFullfilled = () => {
         const tempProject = project;
-        let position = project.positions.filter(p => p.id = positionId)[0];
-        position.fullfilled = true;
+        tempProject.positions.forEach(p => {
+            if (p.id === positionId) {
+                p.fullfilled = true;
+            }
+        })
         setProject({ ...tempProject });
     }
+
+    const acceptedUserMesaages = async () => {
+        let position = project.positions.filter(p => p.id === positionId)[0];
+        await addMessagesInConversations({
+            senderUsername: user!.username,
+            messageContent: `Congratulations, You are accepted for the position ${position.title} in the project ${project.title}`,
+        }, application.username)
+    }
+
+    const rejectedUserMesaages = async () => {
+        let position = project.positions.filter(p => p.id === positionId)[0];
+        await addMessagesInConversations({
+            senderUsername: user!.username,
+            messageContent: `Sorry, You are rejected for the position ${position.title} in the project ${project.title}`,
+        }, application.username)
+    }
+
     const accept = () => {
+        acceptedUserMesaages();
         acceptDeveloper(projectId, positionId, application.username);
         eliminateAll();
         setPositionFullfilled();
     }
 
     const reject = () => {
+        rejectedUserMesaages();
         rejectDeveloper(projectId, positionId, application.username);
         eliminateSelf();
     }
 
     const eliminateSelf = () => {
         const tempProject = project;
-        let position = project.positions.filter(p => p.id = positionId)[0];
-        console.log(position);
-        position.applications = position.applications.filter(a => {
-            console.log(`${a.username} || ${application.username} || ${a.username !== application.username}`);
-            return a.username !== application.username;
+        tempProject.positions.forEach(p => {
+            if (p.id === positionId) {
+                p.applications = p.applications.filter(a => a.username !== application.username);
+            }
         })
-        console.log(tempProject);
         setProject({ ...tempProject });
     }
 
     const eliminateAll = () => {
         const tempProject = project;
-        project.positions.filter(p => p.id = positionId)[0].applications = [];
+        tempProject.positions.forEach(p => {
+            if (p.id === positionId) {
+                p.applications = [];
+            }
+        })
         setProject({ ...tempProject });
     }
 

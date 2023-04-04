@@ -32,6 +32,8 @@
 }
 
 .application-box {
+    display: flex;
+    flex-direction: column;
     width: 80%;
     padding: 2rem 10%;
 }
@@ -114,6 +116,7 @@ input {
     align-items: center;
     justify-content: space-between;
     border-radius: 10px;
+    padding: 1.5em;
 }
 
 .pop-up-button-container {

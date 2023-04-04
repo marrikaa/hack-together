@@ -35,7 +35,7 @@ const ProjectDetails = () => {
         <div className='project-details'>
             {!project && <LoadingSpinner />}
             {project && <>
-                {applyPopUpVisible && <ApplyPopUp projectId={projectId} setVisible={setApplyPopUpVisible} selectedPositionId={selectedPosition} />}
+                {applyPopUpVisible && <ApplyPopUp project={project} setVisible={setApplyPopUpVisible} selectedPositionId={selectedPosition} />}
                 <h1 style={{ fontWeight: 'medium' }}>{project?.title}</h1>
                 <h2 className='project-details-project-owner-name'>By {project?.owner}</h2>
                 <p className='project-details-description'>{project?.description}</p>

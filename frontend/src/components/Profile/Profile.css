@@ -39,10 +39,38 @@
     cursor: pointer;
 }
 
+
 .profile-tags-container {
     width: 100%;
     display: flex;
     margin-top: 2em;
     margin-bottom: 2em;
+    align-items: center;
+}
+
+.send-message-icon {
+    height: 40px;
+}
+
+.send-message-icon:hover {
+    cursor: pointer;
+    scale: 1.2;
+    rotate: 5deg;
+    transition: all 0.2s;
+}
+
+.profile-picture {
+    height: 80px;
+    width: 80px;
+    margin-right: 1em;
+    border-radius: 50%;
+}
+
+.user-img-userName {
+    display: flex;
+}
+
+.profile-picture-and-username {
+    display: flex;
     align-items: center;
 }

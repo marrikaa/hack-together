@@ -42,18 +42,20 @@ export type ProjectWthoutId = {
     positions: Position[],
 }
 
-export type Message = {
-    senderId: string,
-    receiverUsername: string,
-    messageContent: string,
-}
-
-export type NewConversationType = {
-    id: string,
-    messageContent: Message[],
-}
-
 export type Application = {
     username: string,
     message: string,
+}
+
+export type Message = {
+    senderUsername: string,
+    messageContent: string,
+    read: boolean,
+}
+
+export type Conversation = {
+    conversationId: string,
+    person1: string,
+    person2: string,
+    messageContent: Message[],
 }

@@ -1,10 +1,5 @@
-export type Message = {
-    senderId: string,
-    receiverUsername: string,
-    messageContent: string,
-}
 
-export type Link = {
+export type LinkType = {
     name: string,
     value: string,
 }
@@ -13,9 +8,9 @@ export type Link = {
 export type User = {
     uid: string,
     username: string,
-    img: string,
+    img: number,
     about: string,
-    links: Link[],
+    links: LinkType[],
     projects: string[],
     skills: string[],
     messages: string[],
@@ -25,6 +20,8 @@ export type AppContextType = {
     user: User,
     getUser: () => void,
     setUser: (user: User) => void,
+    conversations: ConversationType[],
+    notifications: NotificationType[]
 }
 
 export type Position = {
@@ -55,5 +52,28 @@ export type ProjectWithoutId = {
 
 export type Application = {
     username: string,
+    message: string,
+}
+
+export type Message = {
+    senderUsername: string,
+    messageContent: string,
+    read?: boolean,
+}
+
+export type ConversationType = {
+    conversationId?: string,
+    person1: string,
+    person2: string,
+    messages: Message[],
+} | null
+
+export type ErrorType = {
+    message: string,
+}
+
+export type NotificationType = {
+    type: string,
+    title: string,
     message: string,
 }

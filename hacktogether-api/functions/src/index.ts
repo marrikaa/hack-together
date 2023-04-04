@@ -1,8 +1,10 @@
 /* eslint-disable no-console */
 import express from "express";
+import { getConversationsByUserId, makeMessageRead, postMessageToConversation } from './database/MDbmanager';
 import { addApplicationToProject, createProject, fromApplicationtoDevelopers, getAllProjects, getProjectsById, getUserProjectsById, removeApplicationFromProject } from './database/PDbManager';
 import { getUserByUserName, login, register, getAllTags, updateUser, addProjectToUser, getAllUsers } from './database/UDbManager';
 import { User } from './types/types';
+
 
 const functions = require('firebase-functions')
 
@@ -10,6 +12,10 @@ const functions = require('firebase-functions')
 const app = express();
 
 app.use(express.json());
+
+app.use(express.urlencoded({
+    extended: true
+}));
 
 const cors = require("cors");
 const corsOptions = {
@@ -19,6 +25,7 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions))
+
 
 app.post('/api/register', async (req, res) => {
     try {
@@ -175,4 +182,44 @@ app.post('/api/project', async (req, res) => {
     }
 })
 
+app.post('/api/messages/:receiverUsername', async (req, res) => {
+    try {
+        if (!(req.body.senderUsername && req.body.messageContent)) {
+            res.status(400).send({ message: "Body is not correct" });
+        }
+        await postMessageToConversation(req.body, req.params.receiverUsername);
+        res.status(201).send({ message: "posted successfully" });
+    } catch (e: any) {
+        res.status(500).send({ message: e.message });
+    }
+})
+
+app.get('/api/messages/:userId', async (req, res) => {
+    try {
+        const response = await getConversationsByUserId(req.params.userId);
+        res.status(201).send(response);
+    } catch (e: any) {
+        res.status(500).send({ message: e.message });
+    }
+})
+
+// app.post('/api/profile/:userId/image', async (req, res) => {
+
+//     try {
+//         //const file = Buffer.from(req.body).toString('base64');
+//         await uploadImageAndSetUserImage(req.params.userId, req.body);
+//         res.status(201).send({ message: "posted successfully" });
+//     } catch (e: any) {
+//         res.status(500).send({ message: e.message });
+//     }
+// })
+
+app.patch('/api/conversation/:convoId', async (req, res) => {
+    try {
+        await makeMessageRead(req.params.convoId, req.body.username);
+        res.status(204).send({ message: "update successfully" });
+    } catch (e: any) {
+        res.status(500).send({ message: e.message });
+    }
+})
 exports.app = functions.https.onRequest(app);
