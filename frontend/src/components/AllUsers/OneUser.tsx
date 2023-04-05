@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { AppContext } from '../../context/AppContext';
 import { LinkType } from '../../types/types';
 import ProfileLink from '../ProfileLink/ProfileLink';
 import './AllUsers.css';
@@ -15,9 +16,8 @@ type OneUserProps = {
 }
 
 export const OneUser = ({ username, img, about, links, skills, }: OneUserProps) => {
-
     const navigate = useNavigate();
-
+    const { user } = useContext(AppContext);
     const handleClick = () => {
         navigate(`/profile/${username}`)
     }
@@ -34,7 +34,7 @@ export const OneUser = ({ username, img, about, links, skills, }: OneUserProps) 
                     <h2 className='user-card-title'>{username}</h2>
                 </div>
 
-                {username &&
+                {user?.username &&
                     <img className='send-message-icon' onClick={handleMailClick} src={emailIcon} alt="" />
                 }
             </div>

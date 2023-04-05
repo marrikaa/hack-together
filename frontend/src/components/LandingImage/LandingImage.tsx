@@ -29,13 +29,13 @@ export const LandingImage = () => {
             <Canvas
                 ref={canvasRef}
                 dpr={[1, 2]}
-                camera={{ position: [0, 2, 5], fov: 45, near: 0.1, far: 100 }}
-                style={{ position: "absolute", width: "80%", height: "80%" }}
+                camera={{ position: [0, 2, 5], fov: 45, near: 100, far: 100 }}
+                style={{ position: "absolute", width: "100%", height: "90%", left: 0, right: 0, top: "3rem" }}
             >
-                <color attach="background" args={["#ffffff"]} />
+                <color attach="background" args={["#fff"]} />
                 <PresentationControls speed={1.5} rotation={[0, rotation, 0]} polar={[0, Math.PI / 4]} >
                     <Stage environment={"dawn"}>
-                        <Model scale={0.5} />
+                        <Model scale={0.2} />
                     </Stage>
                 </PresentationControls>
             </Canvas >

@@ -14,7 +14,7 @@ const LoginForm = () => {
         let currentUser = await getExternalUser(emailInput.value, passwordInput.value);
         if (currentUser!.username) {
             setUser(currentUser);
-            navigate(`/`);
+            navigate(-1);
         }
         else {
             setError(currentUser!.uid.split('Error ')[1].replaceAll(/[()]/g, ""));
