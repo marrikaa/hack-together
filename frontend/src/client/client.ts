@@ -1,5 +1,4 @@
 import { Project, User, ProjectWithoutId, Application, Message, ConversationType } from '../types/types';
-import fs from 'fs';
 
 const root = 'https://us-central1-hacktogether-api.cloudfunctions.net/app';
 
